@@ -1,23 +1,19 @@
 package github.com.pinmarigor.vigia.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,19 +34,18 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.theme.CyanBlue
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
-import github.com.pinmarigor.vigia.ui.theme.FormColor
+import github.com.pinmarigor.vigia.ui.theme.GradientEnd
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-
+fun ForgotPassword(navController: NavController) {
+    var email by rememberSaveable{ mutableStateOf(value = "") }
     val context = LocalContext.current
 
     Box(
@@ -69,7 +64,7 @@ fun LoginScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 80.dp),
+                .padding(top = 80.dp, start = 12.dp, end = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -96,21 +91,24 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Vigia",
+                text = "Esqueceu a senha?",
                 color = Color.White,
                 fontSize = 34.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Sua segurança começa aqui",
-                color = Color.Cyan,
-                fontSize = 16.sp
+                text = "Sem problemas! Digite seu email e enviaremos instruções para recuperar sua conta.",
+                color = GradientEnd,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Card(
                 modifier = Modifier
@@ -118,8 +116,10 @@ fun LoginScreen(navController: NavController) {
                     .padding(horizontal = 24.dp)
                     .height(420.dp),
                 shape = RoundedCornerShape(30.dp),
-
-                colors = CardDefaults.cardColors(containerColor = FormColor)
+                colors = CardDefaults.cardColors(
+                    containerColor = DarkBlue,
+                ),
+                border = BorderStroke(1.dp, CyanBlue)
             ) {
                 Column(
                     modifier = Modifier
@@ -128,38 +128,15 @@ fun LoginScreen(navController: NavController) {
 
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(
-                            onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                            shape = RoundedCornerShape(16.dp),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                text = "Entrar",
-                                color = Color.White
-                            )
-                        }
+                    Text(
+                        text = "Email cadastrado",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                    )
 
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Button(
-                            onClick = { navController.navigate("register") },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
-                            shape = RoundedCornerShape(16.dp),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                text = "Cadastrar",
-                                color = Color.DarkGray
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     OutlinedTextField(
                         value = email,
@@ -169,7 +146,7 @@ fun LoginScreen(navController: NavController) {
                             Icon(
                                 imageVector = Icons.Default.Email,
                                 contentDescription = "Email",
-                                tint = Color.Black
+                                tint = Color.LightGray
                             )
                         },
                         modifier = Modifier.fillMaxWidth(),
@@ -181,61 +158,20 @@ fun LoginScreen(navController: NavController) {
                             focusedPlaceholderColor = Color.LightGray,
                             unfocusedPlaceholderColor = Color.Gray,
 
-                            focusedTextColor = Color.Black,
-                            unfocusedTextColor = Color.Black,
+                            focusedTextColor = Color.LightGray,
+                            unfocusedTextColor = Color.LightGray,
                         )
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        placeholder = { Text(text = "Senha") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Password,
-                                contentDescription = "Email",
-                                tint = Color.Black
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp),
-                        visualTransformation = PasswordVisualTransformation(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color.Cyan,
-                            unfocusedBorderColor = Color.Gray,
-
-                            focusedPlaceholderColor = Color.LightGray,
-                            unfocusedPlaceholderColor = Color.Gray,
-
-                            focusedTextColor = Color.Black,
-                            unfocusedTextColor = Color.Black,
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Text(
-                        text = "Esqueceu a senha?",
-                        color = Color.Cyan,
-                        fontSize = 12.sp,
-
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .clickable{
-                                navController.navigate("forgot_password")
-                            }
-                    )
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
                     Button(
-                        enabled = email.isNotEmpty() && password.isNotEmpty(),
+                        enabled = email.isNotEmpty(),
                         onClick = {
+                            navController.navigate("forgot_password_cod")
                             Toast.makeText(
                                 context,
-                                "Login realizado",
+                                "Email de recuperação enviado",
                                 Toast.LENGTH_SHORT
 
                             ).show()
@@ -252,14 +188,22 @@ fun LoginScreen(navController: NavController) {
                     ) {
 
                         Text(
-                            text = "Entrar",
+                            text = "Enviar instruções",
                             color = Color.White,
                             fontSize = 18.sp
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = "Você receberá um email com um link seguro para redefinir sua senha",
+                        color = Color.White,
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }
     }
 }
-

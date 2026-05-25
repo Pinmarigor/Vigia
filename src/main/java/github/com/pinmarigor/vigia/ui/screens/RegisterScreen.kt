@@ -26,6 +26,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -45,8 +47,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.ui.theme.CardColor
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
+import github.com.pinmarigor.vigia.ui.theme.FormColor
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
@@ -56,6 +58,7 @@ fun RegisterScreen(navController: NavController) {
     var telephone by rememberSaveable() { mutableStateOf(value = "") }
     var password by rememberSaveable() { mutableStateOf(value = "") }
     var repeatPassword by rememberSaveable() { mutableStateOf(value="") }
+    var acceptedTerms by rememberSaveable { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -126,7 +129,7 @@ fun RegisterScreen(navController: NavController) {
                     .height(450.dp),
                 shape = RoundedCornerShape(30.dp),
 
-                colors = CardDefaults.cardColors(containerColor = CardColor)
+                colors = CardDefaults.cardColors(containerColor = FormColor)
             ) {
                 Column(
                     modifier = Modifier
@@ -305,10 +308,25 @@ fun RegisterScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
-                        text = "Ao cria a conta, você concorda com nossos Termos de Uso e Política de Privacidade",
-                        fontSize = 12.sp
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(
+                            checked = acceptedTerms,
+                            onCheckedChange = {
+                                acceptedTerms = it
+                            },
+                            colors = CheckboxDefaults.colors (
+                                checkedColor = LightBLue,
+                                uncheckedColor = Color.Gray,
+                                checkmarkColor = Color.White
+                            )
+                        )
+
+                        Text(
+                            text = "Ao cria a conta, você concorda com nossos Termos de Uso e Política de Privacidade",
+                            fontSize = 12.sp
+                        )
+                    }
+
 
                     Spacer(modifier = Modifier.height(30.dp))
 
@@ -318,7 +336,9 @@ fun RegisterScreen(navController: NavController) {
                             email.isNotEmpty() &&
                             telephone.isNotEmpty() &&
                             password.isNotEmpty() &&
-                            repeatPassword.isNotEmpty(),
+                            repeatPassword.isNotEmpty() &&
+                            acceptedTerms &&
+                            password == repeatPassword,
                         onClick = {
                             Toast.makeText(
                                 context,
