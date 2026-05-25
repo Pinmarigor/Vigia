@@ -114,7 +114,7 @@ fun ForgotPassword(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(420.dp),
+                    .height(300.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = DarkBlue,
