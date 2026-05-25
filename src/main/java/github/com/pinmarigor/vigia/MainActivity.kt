@@ -5,7 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
-import github.com.pinmarigor.vigia.ui.screens.Login
+import github.com.pinmarigor.vigia.ui.navigation.AppNavigation
+import github.com.pinmarigor.vigia.ui.screens.LoginScreen
 import github.com.pinmarigor.vigia.ui.theme.VigiaTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             VigiaTheme {
                 Surface {
-                    Login()
+                    AppNavigation()
                 }
             }
         }

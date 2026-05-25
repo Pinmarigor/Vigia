@@ -13,10 +13,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,15 +50,18 @@ import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+fun RegisterScreen(navController: NavController) {
+    var name by rememberSaveable() { mutableStateOf(value="") }
+    var email by rememberSaveable() { mutableStateOf(value = "") }
+    var telephone by rememberSaveable() { mutableStateOf(value = "") }
+    var password by rememberSaveable() { mutableStateOf(value = "") }
+    var repeatPassword by rememberSaveable() { mutableStateOf(value="") }
 
     val context = LocalContext.current
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
@@ -68,6 +75,7 @@ fun LoginScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(top = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -115,16 +123,16 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(420.dp),
+                    .height(450.dp),
                 shape = RoundedCornerShape(30.dp),
 
                 colors = CardDefaults.cardColors(containerColor = CardColor)
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp),
-
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(
@@ -132,33 +140,60 @@ fun LoginScreen(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Button(
-                            onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                            onClick = { navController.navigate("login") },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 text = "Entrar",
-                                color = Color.White
+                                color = Color.DarkGray
                             )
                         }
 
                         Spacer(modifier = Modifier.width(12.dp))
 
                         Button(
-                            onClick = { navController.navigate("register") },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 text = "Cadastrar",
-                                color = Color.DarkGray
+                                color = Color.White
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        placeholder = { Text(text = "Nome") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "Name",
+                                tint = Color.Black
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Cyan,
+                            unfocusedBorderColor = Color.Gray,
+
+                            focusedPlaceholderColor = Color.LightGray,
+                            unfocusedPlaceholderColor = Color.Gray,
+
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black,
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     OutlinedTextField(
                         value = email,
@@ -185,7 +220,34 @@ fun LoginScreen(navController: NavController) {
                         )
                     )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OutlinedTextField(
+                        value = telephone,
+                        onValueChange = { telephone = it },
+                        placeholder = { Text(text = "Telefone") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Phone,
+                                contentDescription = "Email",
+                                tint = Color.Black
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Cyan,
+                            unfocusedBorderColor = Color.Gray,
+
+                            focusedPlaceholderColor = Color.LightGray,
+                            unfocusedPlaceholderColor = Color.Gray,
+
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black,
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     OutlinedTextField(
                         value = password,
@@ -213,28 +275,59 @@ fun LoginScreen(navController: NavController) {
                         )
                     )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OutlinedTextField(
+                        value = repeatPassword,
+                        onValueChange = { repeatPassword = it },
+                        placeholder = { Text(text = "Repetir Senha") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Password,
+                                contentDescription = "Email",
+                                tint = Color.Black
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        visualTransformation = PasswordVisualTransformation(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Cyan,
+                            unfocusedBorderColor = Color.Gray,
+
+                            focusedPlaceholderColor = Color.LightGray,
+                            unfocusedPlaceholderColor = Color.Gray,
+
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black,
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
-                        text = "Esqueceu a senha?",
-                        color = Color.Cyan,
-                        fontSize = 12.sp,
-
-                        modifier = Modifier.align(Alignment.End)
+                        text = "Ao cria a conta, você concorda com nossos Termos de Uso e Política de Privacidade",
+                        fontSize = 12.sp
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Button(
-                        enabled = email.isNotEmpty() && password.isEmpty(),
+                        enabled =
+                            name.isNotEmpty() &&
+                            email.isNotEmpty() &&
+                            telephone.isNotEmpty() &&
+                            password.isNotEmpty() &&
+                            repeatPassword.isNotEmpty(),
                         onClick = {
                             Toast.makeText(
                                 context,
-                                "Login realizado",
+                                "Cadastrado feito com sucesso!",
                                 Toast.LENGTH_SHORT
 
                             ).show()
                         },
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(55.dp),
@@ -243,11 +336,11 @@ fun LoginScreen(navController: NavController) {
 
                         colors = ButtonDefaults.buttonColors(
                             containerColor = LightBLue
-                        ),
+                        )
                     ) {
 
                         Text(
-                            text = "Entrar",
+                            text = "Cadastrar",
                             color = Color.White,
                             fontSize = 18.sp
                         )
@@ -257,4 +350,3 @@ fun LoginScreen(navController: NavController) {
         }
     }
 }
-
