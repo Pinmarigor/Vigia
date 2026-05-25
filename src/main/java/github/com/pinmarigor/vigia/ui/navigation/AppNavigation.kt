@@ -13,6 +13,7 @@ import github.com.pinmarigor.vigia.ui.screens.RegisterScreen
 fun AppNavigation() {
 
     val navController = rememberNavController()
+    val email : String
 
     NavHost(
         navController = navController,
@@ -31,8 +32,12 @@ fun AppNavigation() {
             ForgotPassword(navController)
         }
 
-        composable("forgot_password_cod") {
-            ForgotPasswordCod(navController)
+        composable("forgot_password_cod/{email}") {
+            blackStackEntry ->
+
+            val email = blackStackEntry.arguments?.getString("email")
+
+            ForgotPasswordCod(navController, email)
         }
     }
 }

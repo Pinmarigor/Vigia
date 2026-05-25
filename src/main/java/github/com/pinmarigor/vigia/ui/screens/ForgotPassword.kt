@@ -168,7 +168,7 @@ fun ForgotPassword(navController: NavController) {
                     Button(
                         enabled = email.isNotEmpty(),
                         onClick = {
-                            navController.navigate("forgot_password_cod")
+                            navController.navigate("forgot_password_cod/$email")
                             Toast.makeText(
                                 context,
                                 "Email de recuperação enviado",
