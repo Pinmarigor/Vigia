@@ -4,16 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import github.com.pinmarigor.vigia.ui.screens.ForgotPassword
-import github.com.pinmarigor.vigia.ui.screens.ForgotPasswordCod
-import github.com.pinmarigor.vigia.ui.screens.LoginScreen
-import github.com.pinmarigor.vigia.ui.screens.RegisterScreen
+import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
+import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
+import github.com.pinmarigor.vigia.ui.screens.login.LoginScreen
+import github.com.pinmarigor.vigia.ui.screens.login.NewPassword
+import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
-    val email : String
 
     NavHost(
         navController = navController,
@@ -38,6 +38,10 @@ fun AppNavigation() {
             val email = blackStackEntry.arguments?.getString("email")
 
             ForgotPasswordCod(navController, email)
+        }
+
+        composable("new_password") {
+            NewPassword(navController)
         }
     }
 }

@@ -1,7 +1,6 @@
-package github.com.pinmarigor.vigia.ui.screens
+package github.com.pinmarigor.vigia.ui.screens.login
 
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,18 +33,19 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.ui.theme.CyanBlue
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
-import github.com.pinmarigor.vigia.ui.theme.GradientEnd
+import github.com.pinmarigor.vigia.ui.theme.FormColor
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun ForgotPassword(navController: NavController) {
-    var email by rememberSaveable{ mutableStateOf(value = "") }
+fun NewPassword(naviController: NavController) {
+    var password by rememberSaveable { mutableStateOf(value = "") }
+    var repeatPassword by rememberSaveable { mutableStateOf(value = "") }
     val context = LocalContext.current
 
     Box(
@@ -64,7 +64,7 @@ fun ForgotPassword(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 80.dp, start = 12.dp, end = 12.dp),
+                .padding(top = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -87,39 +87,23 @@ fun ForgotPassword(navController: NavController) {
                     modifier = Modifier.size(42.dp)
                 )
             }
-
             Spacer(modifier = Modifier.height(20.dp))
-
             Text(
-                text = "Esqueceu a senha?",
+                text = "Redefinir senha",
                 color = Color.White,
                 fontSize = 34.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Sem problemas! Digite seu email e enviaremos instruções para recuperar sua conta.",
-                color = GradientEnd,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
+            Spacer(modifier = Modifier.height(30.dp))
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(300.dp),
+                    .height(420.dp),
                 shape = RoundedCornerShape(30.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = DarkBlue,
-                ),
-                border = BorderStroke(1.dp, CyanBlue)
+
+                colors = CardDefaults.cardColors(containerColor = FormColor)
             ) {
                 Column(
                     modifier = Modifier
@@ -128,29 +112,20 @@ fun ForgotPassword(navController: NavController) {
 
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Email cadastrado",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        modifier = Modifier
-                            .align(Alignment.Start)
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
                     OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        placeholder = { Text(text = "E-mail") },
+                        value = password,
+                        onValueChange = { password = it },
+                        placeholder = { Text(text = "Senha") },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Email,
+                                imageVector = Icons.Default.Password,
                                 contentDescription = "Email",
-                                tint = Color.LightGray
+                                tint = Color.Black
                             )
                         },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
+                        visualTransformation = PasswordVisualTransformation(),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color.Cyan,
                             unfocusedBorderColor = Color.Gray,
@@ -158,20 +133,47 @@ fun ForgotPassword(navController: NavController) {
                             focusedPlaceholderColor = Color.LightGray,
                             unfocusedPlaceholderColor = Color.Gray,
 
-                            focusedTextColor = Color.LightGray,
-                            unfocusedTextColor = Color.LightGray,
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black,
                         )
                     )
-
                     Spacer(modifier = Modifier.height(20.dp))
+                    OutlinedTextField(
+                        value = repeatPassword,
+                        onValueChange = { repeatPassword = it },
+                        placeholder = { Text(text = "Senha") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Password,
+                                contentDescription = "Email",
+                                tint = Color.Black
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        visualTransformation = PasswordVisualTransformation(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Cyan,
+                            unfocusedBorderColor = Color.Gray,
 
+                            focusedPlaceholderColor = Color.LightGray,
+                            unfocusedPlaceholderColor = Color.Gray,
+
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black,
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
                     Button(
-                        enabled = email.isNotEmpty(),
+                        enabled =
+                            password.isNotEmpty() &&
+                            repeatPassword.isNotEmpty() &&
+                            password == repeatPassword,
                         onClick = {
-                            navController.navigate("forgot_password_cod/$email")
+                            naviController.navigate("login")
                             Toast.makeText(
                                 context,
-                                "Email de recuperação enviado",
+                                "Senha redefinida com sucesso!",
                                 Toast.LENGTH_SHORT
 
                             ).show()
@@ -181,27 +183,16 @@ fun ForgotPassword(navController: NavController) {
                             .height(55.dp),
 
                         shape = RoundedCornerShape(16.dp),
-
                         colors = ButtonDefaults.buttonColors(
                             containerColor = LightBLue
                         ),
                     ) {
-
                         Text(
-                            text = "Enviar instruções",
+                            text = "Redefinir senha",
                             color = Color.White,
                             fontSize = 18.sp
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Text(
-                        text = "Você receberá um email com um link seguro para redefinir sua senha",
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        textAlign = TextAlign.Center
-                    )
                 }
             }
         }

@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.ui.screens
+package github.com.pinmarigor.vigia.ui.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.background
