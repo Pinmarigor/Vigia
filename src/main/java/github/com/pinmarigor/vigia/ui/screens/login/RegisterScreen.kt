@@ -47,6 +47,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.FormColor
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
@@ -143,7 +144,7 @@ fun RegisterScreen(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Button(
-                            onClick = { navController.navigate("login") },
+                            onClick = { navController.navigate(Route.LoginScreen) },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier.weight(1f)

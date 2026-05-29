@@ -34,6 +34,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.CyanBlue
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
@@ -155,7 +156,7 @@ fun ForgotPasswordCod(navController: NavController, email: String?) {
             }
             Spacer(modifier = Modifier.height(20.dp))
             Button(
-                onClick = { navController.navigate("login") },
+                onClick = { navController.navigate(Route.LoginScreen) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
@@ -179,7 +180,7 @@ fun ForgotPasswordCod(navController: NavController, email: String?) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .clickable {
-                        navController.navigate("forgot_password")
+                        navController.navigate(Route.ForgotPassword)
                     }
             )
             Text(
@@ -189,7 +190,7 @@ fun ForgotPasswordCod(navController: NavController, email: String?) {
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .clickable{
-                        navController.navigate("new_password")
+                        navController.navigate(Route.NewPassword)
                     }
             )
         }

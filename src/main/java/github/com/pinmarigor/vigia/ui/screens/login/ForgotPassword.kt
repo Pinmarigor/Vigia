@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.CyanBlue
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientEnd
@@ -168,7 +169,7 @@ fun ForgotPassword(navController: NavController) {
                     Button(
                         enabled = email.isNotEmpty(),
                         onClick = {
-                            navController.navigate("forgot_password_cod/$email")
+                            navController.navigate(Route.ForgotPasswordCod(email))
                             Toast.makeText(
                                 context,
                                 "Email de recuperação enviado",

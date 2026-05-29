@@ -1,0 +1,30 @@
+package github.com.pinmarigor.vigia.ui.navigation
+
+import android.R
+import kotlinx.serialization.Serializable
+
+sealed interface Route {
+
+    @Serializable
+    data object Home : Route
+
+    @Serializable
+    data object LoginScreen : Route
+
+    @Serializable
+    data object RegisterScreen: Route
+
+    @Serializable
+    data object ForgotPassword : Route
+
+    @Serializable
+    data class ForgotPasswordCod(
+        val email: String
+    ) : Route
+
+    @Serializable
+    data object NewPassword : Route
+
+    @Serializable
+    data object MapScreen : Route
+}

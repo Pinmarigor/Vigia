@@ -42,8 +42,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.FormColor
+import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
@@ -60,7 +62,7 @@ fun LoginScreen(navController: NavController) {
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         DarkBlue,
-                        Color(0xFF132238),
+                        GradientMiddle,
                         DarkBlue
                     )
                 )
@@ -147,7 +149,7 @@ fun LoginScreen(navController: NavController) {
                         Spacer(modifier = Modifier.width(12.dp))
 
                         Button(
-                            onClick = { navController.navigate("register") },
+                            onClick = { navController.navigate(Route.RegisterScreen) },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier.weight(1f)
@@ -224,7 +226,7 @@ fun LoginScreen(navController: NavController) {
                         modifier = Modifier
                             .align(Alignment.End)
                             .clickable{
-                                navController.navigate("forgot_password")
+                                navController.navigate(Route.ForgotPassword)
                             }
                     )
 
@@ -233,6 +235,7 @@ fun LoginScreen(navController: NavController) {
                     Button(
                         enabled = email.isNotEmpty() && password.isNotEmpty(),
                         onClick = {
+                            navController.navigate(Route.Home)
                             Toast.makeText(
                                 context,
                                 "Login realizado",
