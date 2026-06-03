@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import github.com.pinmarigor.vigia.ui.screens.Community
 import github.com.pinmarigor.vigia.ui.screens.Home
 import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
 import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
@@ -55,9 +56,9 @@ fun MainNavHost(
             MapScreen(navController)
         }
 
-//        composable<Route.Community> {
-//            CommunityScreen()
-//        }
+        composable<Route.Community> {
+            Community(navController)
+        }
 //
 //        composable<Route.Alerts> {
 //            AlertsScreen()

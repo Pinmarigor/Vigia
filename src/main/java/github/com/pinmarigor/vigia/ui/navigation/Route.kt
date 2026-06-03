@@ -27,4 +27,7 @@ sealed interface Route {
 
     @Serializable
     data object MapScreen : Route
+
+    @Serializable
+    data object Community : Route
 }
