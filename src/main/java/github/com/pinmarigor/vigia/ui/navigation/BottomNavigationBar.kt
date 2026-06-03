@@ -1,12 +1,17 @@
 package github.com.pinmarigor.vigia.ui.navigation
 
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 
@@ -14,7 +19,8 @@ import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 fun BottomNavigationBar(
     navController: NavHostController
 ) {
-    NavigationBar (
+    NavigationBar(
+        modifier = Modifier.height(100.dp),
         containerColor = DarkBlue
     ) {
 
@@ -28,6 +34,19 @@ fun BottomNavigationBar(
             },
             label = {
                 Text("Home")
+            }
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate(Route.MapScreen)
+            },
+            icon = {
+                Icon(Icons.Default.Map , null)
+            },
+            label = {
+                Text("Mapa")
             }
         )
 
@@ -57,17 +76,5 @@ fun BottomNavigationBar(
 //            }
 //        )
 //
-//        NavigationBarItem(
-//            selected = false,
-//            onClick = {
-//                navController.navigate(Route.Contacts)
-//            },
-//            icon = {
-//                Icon(Icons.Default.Person, null)
-//            },
-//            label = {
-//                Text("Contatos")
-//            }
-//        )
     }
 }

@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
             val currentRoute = navBackStackEntry?.destination?.route
 
             val showBottomBar =
-                currentRoute?.contains("Home") == true
+                currentRoute?.contains("Home") == true ||
+                currentRoute?.contains("MapScreen") == true
 
             Scaffold(
 

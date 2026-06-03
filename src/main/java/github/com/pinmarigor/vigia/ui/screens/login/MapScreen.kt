@@ -35,7 +35,7 @@ fun MapScreen(navController: NavController) {
 
         FloatingActionButton(
             onClick = {
-                navController.navigate(Route.LoginScreen)
+                navController.navigate(Route.Home)
             },
             containerColor = Color.White,
             modifier = Modifier

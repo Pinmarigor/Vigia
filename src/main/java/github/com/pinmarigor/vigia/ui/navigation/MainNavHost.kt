@@ -19,7 +19,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.LoginScreen
+        startDestination = Route.Home
     ) {
 
         composable <Route.LoginScreen>{
