@@ -18,7 +18,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Filter
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -31,8 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.components.Post
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
+import github.com.pinmarigor.vigia.ui.theme.GradientStart
 
 
 @Composable
@@ -69,7 +74,7 @@ fun Community(navController: NavController) {
             Spacer(modifier = Modifier.height(30.dp))
             Row{
                 Icon(
-                    imageVector = Icons.Default.Filter,
+                    imageVector = Icons.Default.FilterList,
                     contentDescription = "Filtro",
                     tint = Color.LightGray
                 )
@@ -109,6 +114,72 @@ fun Community(navController: NavController) {
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(30.dp))
+
+
+            val warning: Post = Post(
+                Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
+                Icons.Default.Warning,
+                "Alerta",
+                Color(0xFFC7B300),
+                "Atividade Suspeita",
+                "Grupo de pessoas em atitude suspeita próximo ao banco",
+                "Av. Paulista, 1500",
+                "há 15 min"
+            )
+            val alert: Post = Post(
+                Modifier.background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp)).padding(12.dp),
+                Icons.Default.Warning,
+                "Alerta",
+                Color(0xFFD20303),
+                "Roubo Reportado",
+                "Assalto a pedestre relatado por testemunha",
+                "Rua Augusta, 800",
+                "há 45 min"
+            )
+            val lighting: Post = Post(
+                Modifier.background(GradientStart, shape = RoundedCornerShape(12.dp)).padding(12.dp),
+                Icons.Filled.Lightbulb,
+                "lighting",
+                Color(0xF30060AB),
+                "Iluminação Precária",
+                "Poste queimado, área muito escura à noite",
+                "Rua da Consolação, 2000",
+                "há 2 horas"
+            )
+            val safeArea: Post = Post(
+                Modifier.background(Color(0xE618960B), shape = RoundedCornerShape(12.dp)).padding(12.dp),
+                Icons.Default.Shield,
+                "safe",
+                Color(0xF700C70A),
+                "Área Segura",
+                "Presença de segurança, local bem iluminado",
+                "Parque Ibirapuera",
+                "há 3 horas"
+            )
+            val warnings: Post = Post(
+                Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
+                Icons.Default.Warning,
+                "warning",
+                Color(0xFFC7B300),
+                "Atividade Suspeita",
+                "Veículo parado há muito tempo sem ocupantes visíveis",
+                "Rua Oscar Freire",
+                "há 4 horas"
+            )
+
+            Post(warning)
+            Spacer(modifier = Modifier.height(30.dp))
+            Post(alert)
+            Spacer(modifier = Modifier.height(30.dp))
+            Post(lighting)
+            Spacer(modifier = Modifier.height(30.dp))
+            Post(safeArea)
+            Spacer(modifier = Modifier.height(30.dp))
+            Post(warnings)
+            Spacer(modifier = Modifier.height(30.dp))
+
+
         }
     }
 }

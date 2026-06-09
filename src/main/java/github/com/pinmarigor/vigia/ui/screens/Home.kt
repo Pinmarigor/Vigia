@@ -84,24 +84,24 @@ fun Home(navController: NavController) {
             .padding(top = 0.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        FloatingActionButton(
-            onClick = {},
-            containerColor = Color.Red,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .zIndex(1f)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Sos,
-                contentDescription = "SOS",
-                tint = Color.White
-            )
-        }
+//        FloatingActionButton(
+//            onClick = {},
+//            containerColor = Color.Red,
+//            modifier = Modifier
+//                .align(Alignment.BottomEnd)
+//                .padding(16.dp)
+//                .zIndex(1f)
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.Sos,
+//                contentDescription = "SOS",
+//                tint = Color.White
+//            )
+//        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 50.dp),
+                .padding(top = 50.dp, bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(

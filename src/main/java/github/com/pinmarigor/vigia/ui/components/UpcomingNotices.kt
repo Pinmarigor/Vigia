@@ -32,7 +32,6 @@ fun UnpcomingNotices(type: String, location: String, time: String, modifier: Mod
                         .padding(12.dp)
                 )
                 {
-                    // Argumento
                     Icon(
                         imageVector = imageVector,
                         contentDescription = description
@@ -44,7 +43,6 @@ fun UnpcomingNotices(type: String, location: String, time: String, modifier: Mod
                 Row(horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(
                         text = type,
-                        // argumento
                         color = color,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp

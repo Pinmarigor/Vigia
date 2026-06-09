@@ -30,4 +30,10 @@ sealed interface Route {
 
     @Serializable
     data object Community : Route
+
+    @Serializable
+    data object Warnings : Route
+
+    @Serializable
+    data object Contacts : Route
 }

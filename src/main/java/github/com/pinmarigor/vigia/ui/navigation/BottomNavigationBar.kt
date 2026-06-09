@@ -2,19 +2,18 @@ package github.com.pinmarigor.vigia.ui.navigation
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
@@ -71,19 +70,32 @@ fun BottomNavigationBar(
                 Text("Comunidade")
             }
         )
-//
-//        NavigationBarItem(
-//            selected = false,
-//            onClick = {
-//                navController.navigate(Route.Alerts)
-//            },
-//            icon = {
-//                Icon(Icons.Default.Notifications, null)
-//            },
-//            label = {
-//                Text("Avisos")
-//            }
-//        )
-//
+
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate(Route.Warnings)
+            },
+            icon = {
+                Icon(Icons.Default.Notifications, null)
+            },
+            label = {
+                Text("Avisos")
+            }
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate(Route.Contacts)
+            },
+            icon = {
+                Icon(Icons.Default.Contacts, null)
+            },
+            label = {
+                Text("Contatos")
+            }
+        )
+
     }
 }

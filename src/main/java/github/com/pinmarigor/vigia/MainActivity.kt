@@ -30,8 +30,9 @@ class MainActivity : ComponentActivity() {
 
             val showBottomBar =
                 currentRoute?.contains("Home") == true ||
-                currentRoute?.contains("MapScreen") == true ||
-                currentRoute?.contains("Community") == true
+                currentRoute?.contains("Community") == true ||
+                currentRoute?.contains("Warnings") == true ||
+                currentRoute?.contains("Contacts") == true
 
             Scaffold(
 

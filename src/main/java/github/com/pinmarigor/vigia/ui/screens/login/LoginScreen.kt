@@ -67,6 +67,7 @@ fun LoginScreen(navController: NavController) {
                     )
                 )
             )
+            .padding(bottom = 20.dp)
     ) {
         Column(
             modifier = Modifier
@@ -127,7 +128,6 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(24.dp),
-
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(

@@ -75,6 +75,7 @@ fun RegisterScreen(navController: NavController) {
                     )
                 )
             )
+            .padding(bottom = 20.dp)
     ) {
         Column(
             modifier = Modifier

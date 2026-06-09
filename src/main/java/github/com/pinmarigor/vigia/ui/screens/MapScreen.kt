@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.ui.screens.login
+package github.com.pinmarigor.vigia.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
