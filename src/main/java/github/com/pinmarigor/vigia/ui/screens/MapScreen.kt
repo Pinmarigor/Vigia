@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Sos
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -46,6 +47,20 @@ fun MapScreen(navController: NavController) {
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "back",
                 tint = Color.Black
+            )
+        }
+
+        FloatingActionButton(
+            onClick = {},
+            containerColor = Color.Red,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 16.dp, bottom = 16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Sos,
+                contentDescription = "SOS",
+                tint = Color.White
             )
         }
     }

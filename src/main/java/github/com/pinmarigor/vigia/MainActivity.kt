@@ -6,11 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Sos
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import github.com.pinmarigor.vigia.ui.navigation.BottomNavigationBar
@@ -40,6 +43,20 @@ class MainActivity : ComponentActivity() {
                 bottomBar = {
                     if(showBottomBar) {
                         BottomNavigationBar(navController)
+                    }
+                },
+                floatingActionButton = {
+                    if (showBottomBar) {
+                        FloatingActionButton(
+                            onClick = {},
+                            containerColor = Color.Red
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Sos,
+                                contentDescription = "SOS",
+                                tint = Color.White
+                            )
+                        }
                     }
                 }
 
