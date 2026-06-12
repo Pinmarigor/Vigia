@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.ui.navigation.BottomNavigationBar
 import github.com.pinmarigor.vigia.ui.navigation.MainNavHost
 
@@ -47,16 +48,7 @@ class MainActivity : ComponentActivity() {
                 },
                 floatingActionButton = {
                     if (showBottomBar) {
-                        FloatingActionButton(
-                            onClick = {},
-                            containerColor = Color.Red
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Sos,
-                                contentDescription = "SOS",
-                                tint = Color.White
-                            )
-                        }
+                        Sos(onClick = {})
                     }
                 }
 

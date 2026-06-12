@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
+import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.ui.navigation.Route
 
 @Composable
@@ -50,18 +51,11 @@ fun MapScreen(navController: NavController) {
             )
         }
 
-        FloatingActionButton(
+        Sos(
             onClick = {},
-            containerColor = Color.Red,
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(start = 16.dp, bottom = 16.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Sos,
-                contentDescription = "SOS",
-                tint = Color.White
-            )
-        }
+                .padding(16.dp)
+        )
     }
 }

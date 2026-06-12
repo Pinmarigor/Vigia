@@ -2,6 +2,7 @@ package github.com.pinmarigor.vigia.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,20 +85,6 @@ fun Home(navController: NavController) {
             .padding(top = 0.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
             .verticalScroll(rememberScrollState())
     ) {
-//        FloatingActionButton(
-//            onClick = {},
-//            containerColor = Color.Red,
-//            modifier = Modifier
-//                .align(Alignment.BottomEnd)
-//                .padding(16.dp)
-//                .zIndex(1f)
-//        ) {
-//            Icon(
-//                imageVector = Icons.Default.Sos,
-//                contentDescription = "SOS",
-//                tint = Color.White
-//            )
-//        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -401,7 +388,11 @@ fun Home(navController: NavController) {
                     text = "Ver todos",
                     color = GradientStart,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier
+                        .clickable{
+                            navController.navigate(Route.Contacts)
+                        }
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -430,7 +421,6 @@ fun Home(navController: NavController) {
                                 .size(42.dp)
                                 .clip(CircleShape)
                                 .background(avatarColor)
-                                // Borda da mesma cor do fundo para criar o efeito de "corte" entre eles
                                 .border(width = 2.dp, color = backgroundColor, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
@@ -460,7 +450,9 @@ fun Home(navController: NavController) {
                     )
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        navController.navigate(Route.Contacts)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = buttonBackgroundColor,
                         contentColor = buttonTextColor
