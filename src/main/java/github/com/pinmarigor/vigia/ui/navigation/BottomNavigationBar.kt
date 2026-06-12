@@ -88,19 +88,6 @@ fun BottomNavigationBar(
         NavigationBarItem(
             selected = false,
             onClick = {
-                navController.navigate(Route.Contacts)
-            },
-            icon = {
-                Icon(Icons.Default.Contacts, null)
-            },
-            label = {
-                Text("Contatos")
-            }
-        )
-
-        NavigationBarItem(
-            selected = false,
-            onClick = {
                 navController.navigate(Route.Configs)
             },
             icon = {
