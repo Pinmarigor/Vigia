@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Shield
@@ -148,13 +149,13 @@ fun Home(navController: NavController) {
                                 )
                             )
                         )
-                        .padding(10.dp),
+                        .padding(20.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Área $area",
+                        text = "Área Segura $area",
                         color = Color(0xFF5CE65C),
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -163,13 +164,13 @@ fun Home(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text = region,
+                            text = "Centro, São Paulo $region",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                         Text(
-                            text = index,
+                            text = "87 $index",
                             color = Color(0xFF5CE65C),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold
@@ -181,32 +182,33 @@ fun Home(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = neighborhood,
+                            text = "Praça da República $neighborhood",
                             color = Color.LightGray,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
                         )
                         Text(
                             text = "Índice",
                             color = Color.LightGray,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            /* Icon(
-                                imageVector = Icons.Default.,
-                                contentDescription = "Shield Icon",
-                                tint = Color.White,
+                        Row() {
+                            Icon(
+                                imageVector = Icons.Default.ArrowUpward,
+                                contentDescription = "ArrowUpward Icon",
+                                tint = Color(0xFF1EFD43),
                                 modifier = Modifier.size(12.dp)
-                            ) */
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = score,
+                                text = "3% hoje $score",
                                 color = Color(0xFF5CE65C),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal,
@@ -214,15 +216,17 @@ fun Home(navController: NavController) {
                                     .padding(10.dp, 0.dp)
                             )
                         }
-                        Box(modifier = Modifier.fillMaxSize()) {
+
+                        Row() {
                             Icon(
                                 imageVector = Icons.Default.AccessTime,
                                 contentDescription = "Shield Icon",
                                 tint = Color.LightGray,
                                 modifier = Modifier.size(12.dp)
                             )
+                            Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = update,
+                                text = "Atualizado há 2 min $update",
                                 color = Color.LightGray,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal,
@@ -230,7 +234,12 @@ fun Home(navController: NavController) {
                                     .padding(10.dp, 0.dp)
                             )
                         }
+
                     }
+
+
+
+
                 }
             }
             Spacer(modifier = Modifier.height(30.dp))
