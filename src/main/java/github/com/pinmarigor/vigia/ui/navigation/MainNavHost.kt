@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import github.com.pinmarigor.vigia.ui.screens.Community
+import github.com.pinmarigor.vigia.ui.screens.Configs
 import github.com.pinmarigor.vigia.ui.screens.Contacts
 import github.com.pinmarigor.vigia.ui.screens.Home
 import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
@@ -22,7 +23,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.Contacts
+        startDestination = Route.Configs
     ) {
 
         composable <Route.LoginScreen>{
@@ -63,11 +64,15 @@ fun MainNavHost(
         }
 
         composable<Route.Warnings> {
-            Warnings()
+            Warnings(navController)
         }
 
         composable<Route.Contacts> {
-            Contacts()
+            Contacts(navController)
+        }
+
+        composable<Route.Configs> {
+            Configs(navController)
         }
     }
 }

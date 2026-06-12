@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -97,5 +98,17 @@ fun BottomNavigationBar(
             }
         )
 
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate(Route.Configs)
+            },
+            icon = {
+                Icon(Icons.Default.Settings, null)
+            },
+            label = {
+                Text("Config")
+            }
+        )
     }
 }

@@ -36,4 +36,6 @@ sealed interface Route {
 
     @Serializable
     data object Contacts : Route
+    @Serializable
+    data object Configs : Route
 }

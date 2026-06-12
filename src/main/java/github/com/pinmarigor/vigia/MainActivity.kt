@@ -32,7 +32,8 @@ class MainActivity : ComponentActivity() {
                 currentRoute?.contains("Home") == true ||
                 currentRoute?.contains("Community") == true ||
                 currentRoute?.contains("Warnings") == true ||
-                currentRoute?.contains("Contacts") == true
+                currentRoute?.contains("Contacts") == true ||
+                currentRoute?.contains("Configs") == true
 
             Scaffold(
 

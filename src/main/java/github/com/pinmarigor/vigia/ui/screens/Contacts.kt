@@ -30,13 +30,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.components.Contacts
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun Contacts() {
+fun Contacts(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,14 +54,14 @@ fun Contacts() {
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "contatos Confiáveis",
+            text = "Contatos Confiáveis",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
         )
         Spacer(modifier = Modifier.height(15.dp))
         Text(
-            text = "Pessoas que podem monitorar sua segurança\n",
+            text = "Pessoas que podem monitorar sua segurança",
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             color = Color.LightGray
