@@ -38,4 +38,6 @@ sealed interface Route {
     data object Contacts : Route
     @Serializable
     data object Configs : Route
+    @Serializable
+    data object Comments
 }

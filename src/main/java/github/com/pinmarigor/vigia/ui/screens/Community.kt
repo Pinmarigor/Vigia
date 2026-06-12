@@ -168,15 +168,15 @@ fun Community(navController: NavController) {
                 "há 4 horas"
             )
 
-            Post(warning)
+            Post(warning, navController)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(alert)
+            Post(alert, navController)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(lighting)
+            Post(lighting, navController)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(safeArea)
+            Post(safeArea, navController)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(warnings)
+            Post(warnings, navController)
             Spacer(modifier = Modifier.height(30.dp))
 
 

@@ -15,9 +15,14 @@ import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +30,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.ui.navigation.Route
 
 class Post (
     val modifier: Modifier,
@@ -38,7 +45,11 @@ class Post (
 )
 
 @Composable
-fun Post (post: Post) {
+fun Post (post: Post, navController: NavController) {
+    var countLike by remember { mutableStateOf(0) }
+    var countComment by remember { mutableStateOf(0) }
+    var like by remember { mutableStateOf(false) }
+
     Box(
         modifier = post.modifier
     ) {
@@ -98,26 +109,48 @@ fun Post (post: Post) {
                 Spacer(modifier = Modifier.height(24.dp))
                 Row() {
                     Button(
-                        onClick = {}
+                        onClick = {
+                            like = !like
+
+                            if(like) {
+                                countLike++
+                            } else {
+                                countLike--
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF00326C)
+                        )
                     ) {
                         Icon(
                             imageVector = Icons.Filled.ThumbUp,
                             contentDescription = null,
+                            tint = Color(0xFF509AF8)
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "45"
+                            text = countLike.toString(),
+                            color = Color(0xFF509AF8)
                         )
                     }
                     Spacer(modifier = Modifier.width(24.dp))
                     Button(
-                        onClick = {}
+                        onClick = {
+                            navController.navigate(Route.Comments)
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF00326C)
+                        )
                     ) {
                         Icon(
                             imageVector = Icons.Filled.ChatBubbleOutline,
                             contentDescription = null,
+                            tint = Color(0xFF509AF8)
                         )
+                        Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "45"
+                            text = countComment.toString(),
+                            color = Color(0xFF509AF8)
                         )
                     }
                 }
