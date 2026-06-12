@@ -1,6 +1,5 @@
 package github.com.pinmarigor.vigia.ui.navigation
 
-import android.R
 import kotlinx.serialization.Serializable
 
 sealed interface Route {
@@ -30,7 +29,6 @@ sealed interface Route {
 
     @Serializable
     data object Community : Route
-
     @Serializable
     data object Warnings : Route
 
@@ -38,6 +36,10 @@ sealed interface Route {
     data object Contacts : Route
     @Serializable
     data object Configs : Route
+
+
     @Serializable
-    data object Comments
+    data class Comments(
+        val count: Int
+    ): Route
 }

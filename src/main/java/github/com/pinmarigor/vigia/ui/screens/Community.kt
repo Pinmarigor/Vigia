@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.components.Post
+import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
@@ -118,6 +119,7 @@ fun Community(navController: NavController) {
 
 
             val warning: Post = Post(
+                1,
                 Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
                 "Alerta",
@@ -128,6 +130,7 @@ fun Community(navController: NavController) {
                 "há 15 min"
             )
             val alert: Post = Post(
+                2,
                 Modifier.background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
                 "Alerta",
@@ -138,6 +141,7 @@ fun Community(navController: NavController) {
                 "há 45 min"
             )
             val lighting: Post = Post(
+                3,
                 Modifier.background(GradientStart, shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Filled.Lightbulb,
                 "lighting",
@@ -148,6 +152,7 @@ fun Community(navController: NavController) {
                 "há 2 horas"
             )
             val safeArea: Post = Post(
+                4,
                 Modifier.background(Color(0xE618960B), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Shield,
                 "safe",
@@ -158,6 +163,7 @@ fun Community(navController: NavController) {
                 "há 3 horas"
             )
             val warnings: Post = Post(
+                5,
                 Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
                 "warning",

@@ -24,7 +24,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.Home
+        startDestination = Route.Community
     ) {
 
         composable <Route.LoginScreen>{
@@ -76,8 +76,13 @@ fun MainNavHost(
             Configs(navController)
         }
 
-        composable<Route.Comments> {
-            Comments(navController)
+        composable<Route.Comments> { backStackEntry ->
+            val route = backStackEntry.toRoute<Route.Comments>()
+
+            Comments(
+                navController = navController,
+                count = route.count
+            )
         }
     }
 }

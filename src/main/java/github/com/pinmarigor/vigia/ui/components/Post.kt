@@ -32,8 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.navigation.Route
+import github.com.pinmarigor.vigia.ui.screens.share_post.SharedData
 
 class Post (
+    val id: Int,
     val modifier: Modifier,
     val imageVector: ImageVector,
     val description: String,
@@ -136,7 +138,9 @@ fun Post (post: Post, navController: NavController) {
                     Spacer(modifier = Modifier.width(24.dp))
                     Button(
                         onClick = {
-                            navController.navigate(Route.Comments)
+                            SharedData.selectedPost = post
+                            println("POST SALVO: ${post.type}")
+                            navController.navigate(Route.Comments(countComment))
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF00326C)

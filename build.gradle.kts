@@ -3,16 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.20"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "github.com.pinmarigor.vigia"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "github.com.pinmarigor.vigia"
