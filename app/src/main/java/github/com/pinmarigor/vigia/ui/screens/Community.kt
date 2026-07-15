@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.components.Post
-import github.com.pinmarigor.vigia.ui.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart

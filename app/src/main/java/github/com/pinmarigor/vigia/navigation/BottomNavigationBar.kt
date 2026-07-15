@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.ui.navigation
+package github.com.pinmarigor.vigia.navigation
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

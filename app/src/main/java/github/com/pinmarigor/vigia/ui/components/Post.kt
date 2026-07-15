@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.ui.navigation.Route
+import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.screens.share_post.SharedData
 
 class Post (

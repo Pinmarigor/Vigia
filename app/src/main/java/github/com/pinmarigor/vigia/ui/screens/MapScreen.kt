@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Sos
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -19,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import github.com.pinmarigor.vigia.ui.components.Sos
-import github.com.pinmarigor.vigia.ui.navigation.Route
+import github.com.pinmarigor.vigia.navigation.Route
 
 @Composable
 fun MapScreen(navController: NavController) {

@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "github.com.pinmarigor.vigia"
 
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
 
         versionCode = 1
@@ -34,6 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }

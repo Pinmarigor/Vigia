@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material.icons.filled.Sos
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -43,14 +42,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import github.com.pinmarigor.vigia.ui.components.UnpcomingNotices
-import github.com.pinmarigor.vigia.ui.navigation.Route
+import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart

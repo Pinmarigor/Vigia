@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.ui.navigation
+package github.com.pinmarigor.vigia.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

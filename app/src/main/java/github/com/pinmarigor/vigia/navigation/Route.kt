@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.ui.navigation
+package github.com.pinmarigor.vigia.navigation
 
 import kotlinx.serialization.Serializable
 

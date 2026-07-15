@@ -47,7 +47,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.ui.navigation.Route
+import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.FormColor
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
