@@ -42,4 +42,6 @@ sealed interface Route {
     data class Comments(
         val count: Int
     ): Route
+    @Serializable
+    data object SosScreen
 }

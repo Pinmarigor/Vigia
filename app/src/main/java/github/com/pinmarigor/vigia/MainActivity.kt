@@ -14,6 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.navigation.BottomNavigationBar
 import github.com.pinmarigor.vigia.navigation.MainNavHost
+import github.com.pinmarigor.vigia.navigation.Route
+import github.com.pinmarigor.vigia.ui.screens.SosScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 },
                 floatingActionButton = {
                     if (showBottomBar) {
-                        Sos(onClick = {})
+                        Sos(onClick = {navController.navigate(Route.SosScreen)})
                     }
                 }
 

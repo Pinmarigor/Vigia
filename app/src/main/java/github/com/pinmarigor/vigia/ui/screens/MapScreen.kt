@@ -51,7 +51,7 @@ fun MapScreen(navController: NavController) {
         }
 
         Sos(
-            onClick = {},
+            onClick = {navController.navigate(Route.SosScreen)},
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .padding(16.dp)

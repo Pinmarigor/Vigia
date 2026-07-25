@@ -14,6 +14,7 @@ import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
 import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
 import github.com.pinmarigor.vigia.ui.screens.login.LoginScreen
 import github.com.pinmarigor.vigia.ui.screens.MapScreen
+import github.com.pinmarigor.vigia.ui.screens.SosScreen
 import github.com.pinmarigor.vigia.ui.screens.Warnings
 import github.com.pinmarigor.vigia.ui.screens.login.NewPassword
 import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
@@ -24,7 +25,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.LoginScreen
+        startDestination = Route.Home
     ) {
 
         composable <Route.LoginScreen>{
@@ -83,6 +84,10 @@ fun MainNavHost(
                 navController = navController,
                 count = route.count
             )
+        }
+
+        composable<Route.SosScreen> {
+            SosScreen(navController)
         }
     }
 }
