@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,11 +50,23 @@ import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(
+    navController: NavController,
+    onSignIn: (String, String) -> Unit,
+    errorMessage: String?,
+    onErrorConsumed: () -> Unit
+) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
+
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            onErrorConsumed()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -235,13 +248,7 @@ fun LoginScreen(navController: NavController) {
                     Button(
                         enabled = email.isNotEmpty() && password.isNotEmpty(),
                         onClick = {
-                            navController.navigate(Route.Home)
-                            Toast.makeText(
-                                context,
-                                "Login realizado",
-                                Toast.LENGTH_SHORT
-
-                            ).show()
+                            onSignIn(email, password)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

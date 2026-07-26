@@ -46,7 +46,10 @@ import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 
 @Composable
-fun Configs(navController: NavController) {
+fun Configs(
+    navController: NavController,
+    onSignOut: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -225,7 +228,7 @@ fun Configs(navController: NavController) {
         ButtonSetting(help)
         Spacer(modifier = Modifier.height(30.dp))
         Button(
-            onClick = {},
+            onClick = onSignOut,
             modifier = Modifier
                 .height(80.dp)
                 .padding(10.dp),

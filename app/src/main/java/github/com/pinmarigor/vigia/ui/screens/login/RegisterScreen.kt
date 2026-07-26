@@ -33,6 +33,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -53,7 +54,12 @@ import github.com.pinmarigor.vigia.ui.theme.FormColor
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(
+    navController: NavController,
+    onRegister: (String, String) -> Unit,
+    errorMessage: String?,
+    onErrorConsumed: () -> Unit
+) {
     var name by rememberSaveable() { mutableStateOf(value="") }
     var email by rememberSaveable() { mutableStateOf(value = "") }
     var telephone by rememberSaveable() { mutableStateOf(value = "") }
@@ -62,6 +68,13 @@ fun RegisterScreen(navController: NavController) {
     var acceptedTerms by rememberSaveable { mutableStateOf(false) }
 
     val context = LocalContext.current
+
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            onErrorConsumed()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -342,25 +355,16 @@ fun RegisterScreen(navController: NavController) {
                             acceptedTerms &&
                             password == repeatPassword,
                         onClick = {
-                            Toast.makeText(
-                                context,
-                                "Cadastrado feito com sucesso!",
-                                Toast.LENGTH_SHORT
-
-                            ).show()
+                            onRegister(email, password)
                         },
-
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(55.dp),
-
                         shape = RoundedCornerShape(16.dp),
-
                         colors = ButtonDefaults.buttonColors(
                             containerColor = LightBLue
                         )
                     ) {
-
                         Text(
                             text = "Cadastrar",
                             color = Color.White,

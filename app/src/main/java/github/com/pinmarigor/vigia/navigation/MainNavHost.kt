@@ -1,7 +1,12 @@
 package github.com.pinmarigor.vigia.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -18,22 +23,62 @@ import github.com.pinmarigor.vigia.ui.screens.SosScreen
 import github.com.pinmarigor.vigia.ui.screens.Warnings
 import github.com.pinmarigor.vigia.ui.screens.login.NewPassword
 import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
+import github.com.pinmarigor.vigia.viewmodel.AuthState
+import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
 
 @Composable
 fun MainNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    authViewModel: AuthViewModel
 ) {
+    val authState = authViewModel.authState
+
+    if (authState is AuthState.Loading) {
+        Box(modifier = Modifier.fillMaxSize())
+        return
+    }
+
+    LaunchedEffect(authState) {
+        when (authState) {
+            is AuthState.Authenticated -> navController.navigate(Route.Home) {
+                popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                launchSingleTop = true
+            }
+
+            AuthState.Unauthenticated -> navController.navigate(Route.LoginScreen) {
+                popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                launchSingleTop = true
+            }
+
+            AuthState.Loading -> Unit
+        }
+    }
+
     NavHost(
         navController = navController,
-        startDestination = Route.Home
+        startDestination =
+            if (authState is AuthState.Authenticated)
+                Route.Home
+            else
+                Route.LoginScreen
     ) {
 
-        composable <Route.LoginScreen>{
-            LoginScreen(navController)
+        composable<Route.LoginScreen> {
+            LoginScreen(
+                navController = navController,
+                onSignIn = authViewModel::signIn,
+                errorMessage = authViewModel.errorMessage,
+                onErrorConsumed = authViewModel::consumeError
+            )
         }
 
-        composable <Route.RegisterScreen>{
-            RegisterScreen(navController)
+        composable<Route.RegisterScreen> {
+            RegisterScreen(
+                navController = navController,
+                onRegister = authViewModel::register,
+                errorMessage = authViewModel.errorMessage,
+                onErrorConsumed = authViewModel::consumeError
+            )
         }
 
         composable <Route.ForgotPassword>{
@@ -74,7 +119,10 @@ fun MainNavHost(
         }
 
         composable<Route.Configs> {
-            Configs(navController)
+            Configs(
+                navController = navController,
+                onSignOut = authViewModel::signOut
+            )
         }
 
         composable<Route.Comments> { backStackEntry ->

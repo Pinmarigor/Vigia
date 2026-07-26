@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import github.com.pinmarigor.vigia.ui.components.Sos
@@ -16,19 +17,17 @@ import github.com.pinmarigor.vigia.navigation.BottomNavigationBar
 import github.com.pinmarigor.vigia.navigation.MainNavHost
 import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.screens.SosScreen
+import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
+            val authViewModel: AuthViewModel = viewModel()
             val navController = rememberNavController()
-
             val navBackStackEntry by navController.currentBackStackEntryAsState()
-
             val currentRoute = navBackStackEntry?.destination?.route
-
             val showBottomBar =
                 currentRoute?.contains("Home") == true ||
                 currentRoute?.contains("Community") == true ||
@@ -56,7 +55,8 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     MainNavHost(
-                        navController = navController
+                        navController = navController,
+                        authViewModel = authViewModel
                     )
                 }
             }
