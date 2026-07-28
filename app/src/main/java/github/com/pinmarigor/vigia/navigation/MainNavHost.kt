@@ -1,12 +1,12 @@
 package github.com.pinmarigor.vigia.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -15,12 +15,12 @@ import github.com.pinmarigor.vigia.ui.screens.Community
 import github.com.pinmarigor.vigia.ui.screens.Configs
 import github.com.pinmarigor.vigia.ui.screens.Contacts
 import github.com.pinmarigor.vigia.ui.screens.Home
-import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
-import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
-import github.com.pinmarigor.vigia.ui.screens.login.LoginScreen
 import github.com.pinmarigor.vigia.ui.screens.MapScreen
 import github.com.pinmarigor.vigia.ui.screens.SosScreen
 import github.com.pinmarigor.vigia.ui.screens.Warnings
+import github.com.pinmarigor.vigia.ui.screens.login.ForgotPassword
+import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
+import github.com.pinmarigor.vigia.ui.screens.login.LoginScreen
 import github.com.pinmarigor.vigia.ui.screens.login.NewPassword
 import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
 import github.com.pinmarigor.vigia.viewmodel.AuthState

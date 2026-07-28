@@ -1,14 +1,14 @@
-package github.com.pinmarigor.vigia.model
+package github.com.pinmarigor.vigia.data.model
 
 import java.time.LocalDateTime
 
 data class User(
-    val id: String = "",
+    val uid: String = "",
     val name: String = "",
-    val phones: List<String> = emptyList(),
     val email: String = "",
-    val photoUrl: String? = "",
-    val bio: String? = "",
+    val phones: List<String> = emptyList(),
+    val photoUrl: String? = null,
+    val bio: String? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val isVerified: Boolean = false,
 )

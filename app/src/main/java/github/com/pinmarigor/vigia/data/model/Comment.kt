@@ -1,11 +1,11 @@
-package github.com.pinmarigor.vigia.model
+package github.com.pinmarigor.vigia.data.model
 
 import java.time.LocalDateTime
 
 data class Comment(
-    val id: String = "",
+    val uid: String = "",
     val text: String = "",
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val postId: String = "",
-    val UserId: String = "",
+    val userId: String = "",
 )

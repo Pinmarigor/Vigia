@@ -4,9 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.google.firebase.Firebase
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import github.com.pinmarigor.vigia.data.repositories.UserRepository
+import kotlinx.coroutines.launch
 
 sealed interface AuthState {
     data object Loading : AuthState
@@ -14,9 +15,10 @@ sealed interface AuthState {
     data class Authenticated(val uid: String) : AuthState
 }
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val userRepository: UserRepository
+) : ViewModel() {
 
-    private val auth = Firebase.auth
 
     var authState by mutableStateOf<AuthState>(AuthState.Loading)
         private set
@@ -30,27 +32,23 @@ class AuthViewModel : ViewModel() {
     }
 
     init {
-        auth.addAuthStateListener(listener)
+        FirebaseAuth.getInstance().addAuthStateListener(listener)
     }
 
     fun signIn(email: String, password: String) {
-        errorMessage = null
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnFailureListener { exception ->
-                errorMessage = exception.localizedMessage ?: "Não foi possível entrar."
-            }
+        viewModelScope.launch{
+            userRepository.signIn(email, password)
+        }
     }
 
-    fun register(email: String, password: String) {
-        errorMessage = null
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnFailureListener { exception ->
-                errorMessage = exception.localizedMessage ?: "Não foi possível criar a conta."
-            }
+    fun register(name: String, email: String, password: String, phone: String) {
+        viewModelScope.launch{
+            userRepository.register(name, email, password, phone)
+        }
     }
 
     fun signOut() {
-        auth.signOut()
+        userRepository.signOut()
     }
 
     fun consumeError() {
@@ -58,7 +56,7 @@ class AuthViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        auth.removeAuthStateListener(listener)
         super.onCleared()
+        FirebaseAuth.getInstance().removeAuthStateListener(listener)
     }
 }

@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.model
+package github.com.pinmarigor.vigia.data.model
 
 data class Share(
     val idUser: String = "",

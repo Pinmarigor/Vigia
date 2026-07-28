@@ -56,7 +56,7 @@ import github.com.pinmarigor.vigia.ui.theme.LightBLue
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    onRegister: (String, String) -> Unit,
+    onRegister: (String, String, String, String) -> Unit,
     errorMessage: String?,
     onErrorConsumed: () -> Unit
 ) {
@@ -243,11 +243,11 @@ fun RegisterScreen(
                     OutlinedTextField(
                         value = telephone,
                         onValueChange = { telephone = it },
-                        placeholder = { Text(text = "Telefone") },
+                        placeholder = { Text(text = "Telefone (opcional)") },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Phone,
-                                contentDescription = "Email",
+                                contentDescription = "Phone",
                                 tint = Color.Black
                             )
                         },
@@ -274,7 +274,7 @@ fun RegisterScreen(
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Password,
-                                contentDescription = "Email",
+                                contentDescription = "Password",
                                 tint = Color.Black
                             )
                         },
@@ -302,7 +302,7 @@ fun RegisterScreen(
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Password,
-                                contentDescription = "Email",
+                                contentDescription = "RepeatPassword",
                                 tint = Color.Black
                             )
                         },
@@ -349,13 +349,12 @@ fun RegisterScreen(
                         enabled =
                             name.isNotEmpty() &&
                             email.isNotEmpty() &&
-                            telephone.isNotEmpty() &&
                             password.isNotEmpty() &&
                             repeatPassword.isNotEmpty() &&
                             acceptedTerms &&
                             password == repeatPassword,
                         onClick = {
-                            onRegister(email, password)
+                            onRegister(name, email, password, telephone)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

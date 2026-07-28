@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.model
+package github.com.pinmarigor.vigia.data.model
 
 import java.time.LocalDateTime
 
@@ -7,7 +7,7 @@ enum class NotificationType {
 }
 
 data class Notification(
-    val id: String = "",
+    val uid: String = "",
     val receiverId: String = "",
     val senderId: String = "",
     val referenceId: String = "",

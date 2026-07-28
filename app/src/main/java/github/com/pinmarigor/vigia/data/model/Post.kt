@@ -1,9 +1,9 @@
-package github.com.pinmarigor.vigia.model
+package github.com.pinmarigor.vigia.data.model
 
 import java.time.LocalDateTime
 
 data class Post(
-    val id: String = "",
+    val uid: String = "",
     val description: String = "",
     val authorId: String = "",
     val imageUrls: List<String> = emptyList(),

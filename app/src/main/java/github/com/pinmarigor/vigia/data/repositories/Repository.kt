@@ -1,4 +1,4 @@
-package github.com.pinmarigor.vigia.repositories
+package github.com.pinmarigor.vigia.data.repositories
 
 interface Repository<T> {
     suspend fun create(item: T)

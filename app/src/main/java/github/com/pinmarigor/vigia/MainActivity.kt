@@ -12,19 +12,31 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import github.com.pinmarigor.vigia.data.firebase.FBDatabase
+import github.com.pinmarigor.vigia.data.repositories.UserRepository
 import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.navigation.BottomNavigationBar
 import github.com.pinmarigor.vigia.navigation.MainNavHost
 import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.screens.SosScreen
 import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
+import github.com.pinmarigor.vigia.viewmodel.factory.AuthViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val authViewModel: AuthViewModel = viewModel()
+            val fbDatabase = FBDatabase()
+            val userRepository = UserRepository(fbDatabase)
+
+
+
+            val authFactory = AuthViewModelFactory(userRepository)
+
+
+            val authViewModel: AuthViewModel = viewModel(factory = authFactory)
+
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
