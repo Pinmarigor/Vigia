@@ -48,10 +48,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.firebase.auth)
     implementation(libs.transportation.consumer)
-    implementation(libs.firebase.firestore)
-    implementation("com.google.firebase:firebase-storage")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -64,6 +61,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.9.0")
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+    implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
 
     // Google Maps
     implementation(libs.play.services.maps)

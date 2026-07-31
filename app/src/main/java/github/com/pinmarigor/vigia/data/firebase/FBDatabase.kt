@@ -1,8 +1,11 @@
 package github.com.pinmarigor.vigia.data.firebase
 
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.firestore
+import github.com.pinmarigor.vigia.data.model.User
 import kotlinx.coroutines.tasks.await
 
 class FBDatabase {
@@ -53,11 +56,53 @@ class FBDatabase {
     fun currentUserUid(): String? =
         auth.currentUser?.uid               // descartar após implementar flow
 
+    suspend fun sendEmailVerification() {
+        val user = auth.currentUser ?:throw IllegalArgumentException("Nenhum usuário autenticado")
+        user.sendEmailVerification().await()
+    }
+
+    suspend fun reloadCurrentUser() {
+        val user = auth.currentUser ?: throw IllegalArgumentException("Nenhum usuário autenticado")
+        user.reload().await()
+    }
+
+    fun isCurrentUserVerified(): Boolean {
+        return auth.currentUser?.isEmailVerified == true
+    }
+
     // Crud Usuário
     suspend fun createUser(user: FBUser) {
         usersCollection
             .document(user.uid)
             .set(user)
             .await()
+    }
+
+    suspend fun updateUser(user: User): Boolean? {
+        return try {
+            usersCollection.document(user.uid)
+                .set(user, SetOptions.merge())
+                .await()
+            Log.d("Firestore", "Usuário atualizado com sucesso!")
+            true
+        } catch (e: Exception) {
+            Log.e("Firestore", "Erro ao atualizar usuário", e)
+            false
+        }
+    }
+
+    suspend fun getUserById(uid: String): User? {
+        return try {
+            val userReference = usersCollection.document(uid).get().await()
+            if (userReference.exists()) {
+                userReference.toObject(User::class.java)
+            } else {
+                Log.d("Firestore", "Nenhum usuário encontrado com esse ID!")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Firestore", "Erro ao buscar usuário", e)
+            null
+        }
     }
 }
