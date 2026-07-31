@@ -71,6 +71,14 @@ class FBDatabase {
     }
 
     // Crud Usuário
+    suspend fun deleteUserDocument(uid: String) {
+        usersCollection.document(uid).delete().await()
+    }
+
+    suspend fun deleteAuthUser() {
+        auth.currentUser?.delete()?.await() ?: throw IllegalStateException("Nenhum usuário autenticado para exclusão")
+    }
+
     suspend fun createUser(user: FBUser) {
         usersCollection
             .document(user.uid)
@@ -91,11 +99,11 @@ class FBDatabase {
         }
     }
 
-    suspend fun getUserById(uid: String): User? {
+    suspend fun getUserById(uid: String): FBUser? {
         return try {
             val userReference = usersCollection.document(uid).get().await()
             if (userReference.exists()) {
-                userReference.toObject(User::class.java)
+                userReference.toObject(FBUser::class.java)
             } else {
                 Log.d("Firestore", "Nenhum usuário encontrado com esse ID!")
                 null

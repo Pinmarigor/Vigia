@@ -3,6 +3,7 @@ package github.com.pinmarigor.vigia.data.repositories
 import android.util.Log
 import github.com.pinmarigor.vigia.data.firebase.FBDatabase
 import github.com.pinmarigor.vigia.data.mappers.toFBUser
+import github.com.pinmarigor.vigia.data.mappers.toUser
 import github.com.pinmarigor.vigia.data.model.User
 
 class UserRepository(
@@ -18,11 +19,12 @@ class UserRepository(
     }
 
     override suspend fun delete(id: String) {
-        TODO("Not yet implemented")
+        fbDatabase.deleteUserDocument(id)
+        fbDatabase.deleteAuthUser()
     }
 
     override suspend fun getById(id: String): User? {
-        return fbDatabase.getUserById(id)
+        return fbDatabase.getUserById(id)?.toUser()
     }
 
     override suspend fun getAll(): List<User> {
@@ -47,6 +49,15 @@ class UserRepository(
 
     fun signOut() {
         fbDatabase.signOut()
+    }
+
+    fun getCurrentUserUid(): String? {
+        return fbDatabase.currentUserUid()
+    }
+
+    suspend fun getCurrentUser(): User? {
+        val uid = getCurrentUserUid() ?: return null
+        return getById(uid)
     }
 
     suspend fun syncVerification() {

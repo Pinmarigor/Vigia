@@ -337,7 +337,7 @@ fun RegisterScreen(
                         )
 
                         Text(
-                            text = "Ao cria a conta, você concorda com nossos Termos de Uso e Política de Privacidade",
+                            text = "Ao criar a conta, você concorda com nossos Termos de Uso e Política de Privacidade",
                             fontSize = 12.sp
                         )
                     }

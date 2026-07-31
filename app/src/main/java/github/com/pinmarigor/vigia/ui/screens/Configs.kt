@@ -27,11 +27,22 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.RestoreFromTrash
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,30 +52,73 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.data.model.User
 import github.com.pinmarigor.vigia.ui.components.ButtonSetting
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
+import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
 
 @Composable
 fun Configs(
     navController: NavController,
-    onSignOut: () -> Unit
+    authViewModel: AuthViewModel,
+    onSignOut: () -> Unit,
+    onDelete: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        DarkBlue,
-                        GradientMiddle,
-                        DarkBlue
+    val user: User? = authViewModel.currentUser
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(authViewModel.errorMessage) {
+        authViewModel.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            authViewModel.consumeError()
+        }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Confirmar Exclusão") },
+            text = { Text("Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão removidos.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onDelete()
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Excluir", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = Color.Transparent
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            DarkBlue,
+                            GradientMiddle,
+                            DarkBlue
+                        )
                     )
                 )
-            )
-            .padding(top = 10.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
+                .padding(padding)
+                .padding(top = 10.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
         Text(
             text = "Configurações",
             fontSize = 32.sp,
@@ -95,7 +149,7 @@ fun Configs(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "JS",
+                    text = user?.name?.take(2)?.uppercase() ?: "??",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
@@ -104,14 +158,14 @@ fun Configs(
             Spacer(modifier = Modifier.width(30.dp))
             Column() {
                 Text(
-                    text = "João Silva",
+                    text = user?.name ?: "Usuário",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "joao.silva@email.com",
+                    text = user?.email ?: "",
                     color = Color.LightGray,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
@@ -150,7 +204,7 @@ fun Configs(
             Icons.Default.Person,
             Color(0xFF005CBE),
             "Perfil",
-            "João Silva"
+            user?.name ?: ""
         )
         val notifications: ButtonSetting = ButtonSetting(
             Icons.Default.Notifications,
@@ -161,7 +215,7 @@ fun Configs(
         val privacy: ButtonSetting = ButtonSetting(
             Icons.Default.Lock,
             Color(0xFFFF006F),
-            "Privacida"
+            "Privacidade"
         )
 
         val account: List<ButtonSetting> = listOf(profile, notifications, privacy)
@@ -228,6 +282,34 @@ fun Configs(
         ButtonSetting(help)
         Spacer(modifier = Modifier.height(30.dp))
         Button(
+            onClick = { showDeleteDialog = true },
+            modifier = Modifier
+                .height(80.dp)
+                .padding(10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF8A0000)
+            )
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.RestoreFromTrash,
+                    contentDescription = "Trash Icon",
+                    tint = Color(0xFFFC8585),
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = "Excluir Conta",
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    color = Color(0xFFFC8585)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Button(
             onClick = onSignOut,
             modifier = Modifier
                 .height(80.dp)
@@ -255,4 +337,5 @@ fun Configs(
             }
         }
     }
+}
 }

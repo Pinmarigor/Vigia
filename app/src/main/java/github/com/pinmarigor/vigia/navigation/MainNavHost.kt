@@ -121,7 +121,9 @@ fun MainNavHost(
         composable<Route.Configs> {
             Configs(
                 navController = navController,
-                onSignOut = authViewModel::signOut
+                authViewModel = authViewModel,
+                onSignOut = authViewModel::signOut,
+                onDelete =  authViewModel::deleteAccount,
             )
         }
 
