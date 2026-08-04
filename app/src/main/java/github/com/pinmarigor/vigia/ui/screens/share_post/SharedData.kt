@@ -1,7 +1,7 @@
 package github.com.pinmarigor.vigia.ui.screens.share_post
 
-import github.com.pinmarigor.vigia.ui.components.Post
+import github.com.pinmarigor.vigia.ui.components.Postt
 
 object SharedData {
-    var selectedPost: Post? = null
+    var selectedPost: Postt? = null
 }

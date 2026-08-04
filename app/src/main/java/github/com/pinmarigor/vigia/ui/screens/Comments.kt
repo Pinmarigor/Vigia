@@ -28,9 +28,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import github.com.pinmarigor.vigia.data.model.Post
 import github.com.pinmarigor.vigia.ui.components.Comment
 import github.com.pinmarigor.vigia.ui.components.Post
 import github.com.pinmarigor.vigia.navigation.Route
+import github.com.pinmarigor.vigia.ui.components.Postt
 import github.com.pinmarigor.vigia.ui.screens.share_post.SharedData
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
@@ -104,12 +106,14 @@ fun Comments(navController: NavController, count: Int) {
 
         }
         Spacer(modifier = Modifier.height(30.dp))
-        post?.let {
-            Post(
-                post = it,
-                navController = navController
-            )
-        }
+        val posts: Post = Post()
+//        post?.let {
+//            Post(
+//                post = it,
+//                navController = navController,
+//                posts
+//            )
+//        }
         Spacer(modifier = Modifier.height(30.dp))
         val com1: Comment = Comment(
             "M",

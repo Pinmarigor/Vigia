@@ -35,10 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.components.Post
+import github.com.pinmarigor.vigia.ui.components.Postt
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
-
+import github.com.pinmarigor.vigia.data.model.Post
 
 @Composable
 fun Community(navController: NavController) {
@@ -116,8 +117,8 @@ fun Community(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(30.dp))
 
-
-            val warning: Post = Post(
+            val post: Post = Post()
+            val warning: Postt = Postt(
                 1,
                 Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
@@ -128,7 +129,7 @@ fun Community(navController: NavController) {
                 "Av. Paulista, 1500",
                 "há 15 min"
             )
-            val alert: Post = Post(
+            val alert: Postt = Postt(
                 2,
                 Modifier.background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
@@ -139,7 +140,7 @@ fun Community(navController: NavController) {
                 "Rua Augusta, 800",
                 "há 45 min"
             )
-            val lighting: Post = Post(
+            val lighting: Postt = Postt(
                 3,
                 Modifier.background(GradientStart, shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Filled.Lightbulb,
@@ -150,7 +151,7 @@ fun Community(navController: NavController) {
                 "Rua da Consolação, 2000",
                 "há 2 horas"
             )
-            val safeArea: Post = Post(
+            val safeArea: Postt = Postt(
                 4,
                 Modifier.background(Color(0xE618960B), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Shield,
@@ -161,7 +162,7 @@ fun Community(navController: NavController) {
                 "Parque Ibirapuera",
                 "há 3 horas"
             )
-            val warnings: Post = Post(
+            val warnings: Postt = Postt(
                 5,
                 Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
                 Icons.Default.Warning,
@@ -173,15 +174,15 @@ fun Community(navController: NavController) {
                 "há 4 horas"
             )
 
-            Post(warning, navController)
+            Post(warning, navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(alert, navController)
+            Post(alert, navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(lighting, navController)
+            Post(lighting, navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(safeArea, navController)
+            Post(safeArea, navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(warnings, navController)
+            Post(warnings, navController, post)
             Spacer(modifier = Modifier.height(30.dp))
 
 

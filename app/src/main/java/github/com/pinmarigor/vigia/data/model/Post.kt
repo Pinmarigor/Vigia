@@ -2,6 +2,9 @@ package github.com.pinmarigor.vigia.data.model
 
 import java.time.LocalDateTime
 
+enum class PostType {
+    ATIVIDADE_SUSPEITA, ROUBO, ILUMINACAO_RUIM, AREA_SEGURA, OUTRO
+}
 data class Post(
     val uid: String = "",
     val description: String = "",
@@ -9,8 +12,10 @@ data class Post(
     val imageUrls: List<String> = emptyList(),
     val latitude: Double? = null,
     val longitude: Double? = null,
+    val locationName: String = "",
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val commemtsCount: Int = 0,
     val shareCount: Int = 0,
     val likeCount: Int = 0,
+    val type: PostType = PostType.OUTRO
 )
