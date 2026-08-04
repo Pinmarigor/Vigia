@@ -14,4 +14,12 @@ interface NominatimApi {
         @Query("lon")
         longitude: Double
     ): NominatimResponse
+
+    @GET("search")
+    suspend fun searchLocation(
+        @Query("q")
+        query: String,
+        @Query("format")
+        format: String = "jsonv2"
+    ): List<NominatimResponse>
 }

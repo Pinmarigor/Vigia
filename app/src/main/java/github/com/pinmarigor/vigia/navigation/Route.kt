@@ -29,19 +29,24 @@ sealed interface Route {
 
     @Serializable
     data object Community : Route
+
     @Serializable
     data object Warnings : Route
 
     @Serializable
     data object Contacts : Route
+
     @Serializable
     data object Configs : Route
-
 
     @Serializable
     data class Comments(
         val count: Int
     ): Route
+
     @Serializable
-    data object SosScreen
+    data object SosScreen : Route
+
+    @Serializable
+    data object CreatePost : Route
 }

@@ -18,15 +18,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -40,6 +43,7 @@ import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
 import github.com.pinmarigor.vigia.data.model.Post
+import github.com.pinmarigor.vigia.navigation.Route
 
 @Composable
 fun Community(navController: NavController) {
@@ -55,10 +59,13 @@ fun Community(navController: NavController) {
                     )
                 )
             )
-            .padding(top = 30.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
-            .verticalScroll(rememberScrollState())
     ) {
-        Column() {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 30.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
             Text(
                 text = "Comunidade",
                 color = Color.White,
@@ -118,74 +125,28 @@ fun Community(navController: NavController) {
             Spacer(modifier = Modifier.height(30.dp))
 
             val post: Post = Post()
-            val warning: Postt = Postt(
-                1,
-                Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
-                Icons.Default.Warning,
-                "Alerta",
-                Color(0xFFC7B300),
-                "Atividade Suspeita",
-                "Grupo de pessoas em atitude suspeita próximo ao banco",
-                "Av. Paulista, 1500",
-                "há 15 min"
-            )
-            val alert: Postt = Postt(
-                2,
-                Modifier.background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp)).padding(12.dp),
-                Icons.Default.Warning,
-                "Alerta",
-                Color(0xFFD20303),
-                "Roubo Reportado",
-                "Assalto a pedestre relatado por testemunha",
-                "Rua Augusta, 800",
-                "há 45 min"
-            )
-            val lighting: Postt = Postt(
-                3,
-                Modifier.background(GradientStart, shape = RoundedCornerShape(12.dp)).padding(12.dp),
-                Icons.Filled.Lightbulb,
-                "lighting",
-                Color(0xF30060AB),
-                "Iluminação Precária",
-                "Poste queimado, área muito escura à noite",
-                "Rua da Consolação, 2000",
-                "há 2 horas"
-            )
-            val safeArea: Postt = Postt(
-                4,
-                Modifier.background(Color(0xE618960B), shape = RoundedCornerShape(12.dp)).padding(12.dp),
-                Icons.Default.Shield,
-                "safe",
-                Color(0xF700C70A),
-                "Área Segura",
-                "Presença de segurança, local bem iluminado",
-                "Parque Ibirapuera",
-                "há 3 horas"
-            )
-            val warnings: Postt = Postt(
-                5,
-                Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp),
-                Icons.Default.Warning,
-                "warning",
-                Color(0xFFC7B300),
-                "Atividade Suspeita",
-                "Veículo parado há muito tempo sem ocupantes visíveis",
-                "Rua Oscar Freire",
-                "há 4 horas"
-            )
 
-            Post(warning, navController, post)
+            Post(navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(alert, navController, post)
+            Post(navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(lighting, navController, post)
+            Post(navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(safeArea, navController, post)
+            Post(navController, post)
             Spacer(modifier = Modifier.height(30.dp))
-            Post(warnings, navController, post)
+            Post(navController, post)
             Spacer(modifier = Modifier.height(30.dp))
+        }
 
-
+        FloatingActionButton(
+            onClick = { navController.navigate(Route.CreatePost) },
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(16.dp),
+            containerColor = GradientStart,
+            contentColor = Color.White
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Criar Post")
         }
     }
 }

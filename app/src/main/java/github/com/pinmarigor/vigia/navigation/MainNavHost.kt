@@ -23,13 +23,16 @@ import github.com.pinmarigor.vigia.ui.screens.login.ForgotPasswordCod
 import github.com.pinmarigor.vigia.ui.screens.login.LoginScreen
 import github.com.pinmarigor.vigia.ui.screens.login.NewPassword
 import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
+import github.com.pinmarigor.vigia.ui.screens.CreatePostScreen
 import github.com.pinmarigor.vigia.viewmodel.AuthState
 import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
+import github.com.pinmarigor.vigia.viewmodel.PostViewModel
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    postViewModel: PostViewModel
 ) {
     val authState = authViewModel.authState
 
@@ -138,6 +141,13 @@ fun MainNavHost(
 
         composable<Route.SosScreen> {
             SosScreen(navController)
+        }
+
+        composable<Route.CreatePost> {
+            CreatePostScreen(
+                navController = navController,
+                postViewModel = postViewModel
+            )
         }
     }
 }

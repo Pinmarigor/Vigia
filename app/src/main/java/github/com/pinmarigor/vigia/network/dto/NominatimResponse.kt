@@ -7,5 +7,7 @@ import github.com.pinmarigor.vigia.network.model.NominatimAddress
 data class NominatimResponse(
     @SerializedName("display_name")
     val displayName: String,
-    val address: NominatimAddress
+    val address: NominatimAddress,
+    val lat: String,
+    val lon: String,
 )

@@ -34,10 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.navigation.Route
-import github.com.pinmarigor.vigia.ui.screens.share_post.SharedData
 import github.com.pinmarigor.vigia.data.model.Post
 import github.com.pinmarigor.vigia.data.model.PostType
+import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
 import java.time.LocalDateTime
 
@@ -54,7 +53,7 @@ class Postt (
 )
 
 @Composable
-fun Post (posts: Postt, navController: NavController, post: Post) {
+fun Post (navController: NavController, post: Post) {
     // valores de post
     val typePost = post.type
     val description: String = post.description
@@ -125,29 +124,32 @@ fun Post (posts: Postt, navController: NavController, post: Post) {
     }
 
     Box(
-        modifier = posts.modifier
+        modifier = modifier
     ) {
         Row() {
             Box(modifier = Modifier
-                .background(posts.backgroundColorIcon, shape = RoundedCornerShape(2.dp))
+                .background(
+                    backgroundColorIcon,
+                    shape = RoundedCornerShape(2.dp)
+                )
                 .padding(8.dp)
             ) {
                 Icon(
-                    imageVector = posts.imageVector,
-                    contentDescription = posts.description,
+                    imageVector = imageVector,
+                    contentDescription = descIcon,
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column() {
                 Text(
-                    text = posts.type,
+                    text = type,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = posts.desc,
+                    text = desc,
                     color = Color.White,
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp
@@ -160,7 +162,7 @@ fun Post (posts: Postt, navController: NavController, post: Post) {
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = posts.location,
+                        text = location,
                         color = Color.LightGray,
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp
@@ -174,7 +176,7 @@ fun Post (posts: Postt, navController: NavController, post: Post) {
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = posts.time,
+                        text = time,
                         color = Color.LightGray,
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp
@@ -210,8 +212,8 @@ fun Post (posts: Postt, navController: NavController, post: Post) {
                     Spacer(modifier = Modifier.width(24.dp))
                     Button(
                         onClick = {
-                            SharedData.selectedPost = posts
-                            println("POST SALVO: ${posts.type}")
+                            // SharedData.selectedPost = posts
+                            println("POST SALVO: ${type.toString()}")
                             navController.navigate(Route.Comments(countComment))
                         },
                         colors = ButtonDefaults.buttonColors(

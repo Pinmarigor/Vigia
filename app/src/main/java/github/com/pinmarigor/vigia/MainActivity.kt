@@ -74,7 +74,8 @@ class MainActivity : ComponentActivity() {
 
                     MainNavHost(
                         navController = navController,
-                        authViewModel = authViewModel
+                        authViewModel = authViewModel,
+                        postViewModel = postViewModel
                     )
                 }
             }
