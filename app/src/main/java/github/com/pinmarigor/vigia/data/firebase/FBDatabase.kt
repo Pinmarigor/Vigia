@@ -3,9 +3,14 @@ package github.com.pinmarigor.vigia.data.firebase
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.firestore
 import github.com.pinmarigor.vigia.data.model.User
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class FBDatabase {
@@ -111,6 +116,50 @@ class FBDatabase {
         } catch (e: Exception) {
             Log.e("Firestore", "Erro ao buscar usuário", e)
             null
+        }
+    }
+
+    // CRUD Posts
+    suspend fun createPost(post: FBPost) {
+        val doc = postsCollection.document()
+        post.uid = doc.id
+        doc.set(post).await()
+    }
+
+    fun getPostsFlow(): Flow<List<FBPost>> = callbackFlow {
+        val listener = postsCollection
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+                val posts = snapshot?.toObjects(FBPost::class.java) ?: emptyList()
+                trySend(posts)
+            }
+        awaitClose { listener.remove() }
+    }
+
+    suspend fun getPostById(uid: String): FBPost? {
+        return try {
+            postsCollection.document(uid).get().await().toObject(FBPost::class.java)
+        } catch (e: Exception) {
+            Log.e("Firestore", "Erro ao buscar post", e)
+            null
+        }
+    }
+
+    suspend fun togglePostLike(postId: String, userId: String, isAdd: Boolean) {
+        try {
+            val operation = if (isAdd) FieldValue.arrayUnion(userId) else FieldValue.arrayRemove(userId)
+            val increment = if (isAdd) 1L else -1L
+            
+            postsCollection.document(postId).update(
+                "likedBy", operation,
+                "likeCount", FieldValue.increment(increment)
+            ).await()
+        } catch (e: Exception) {
+            Log.e("Firestore", "Erro ao atualizar likes", e)
         }
     }
 }

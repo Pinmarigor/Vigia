@@ -1,6 +1,7 @@
 package github.com.pinmarigor.vigia.data.firebase
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ServerTimestamp
 
 data class FBUser (
     var uid: String = "",
@@ -9,6 +10,7 @@ data class FBUser (
     var phones: List<String> = emptyList(),
     var photoUrl: String? = null,
     var bio: String? = null,
-    var createdAt: Timestamp = Timestamp.now(),
+    @ServerTimestamp
+    var createdAt: Timestamp? = null,
     var isVerified: Boolean = false,
 )

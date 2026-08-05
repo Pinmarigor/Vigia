@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -29,6 +30,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -38,15 +41,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import github.com.pinmarigor.vigia.ui.components.Post
-import github.com.pinmarigor.vigia.ui.components.Postt
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
-import github.com.pinmarigor.vigia.data.model.Post
 import github.com.pinmarigor.vigia.navigation.Route
+import github.com.pinmarigor.vigia.viewmodel.AuthState
+import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
+import github.com.pinmarigor.vigia.viewmodel.PostViewModel
 
 @Composable
-fun Community(navController: NavController) {
+fun Community(
+    navController: NavController,
+    postViewModel: PostViewModel,
+    authViewModel: AuthViewModel
+) {
+    val posts by postViewModel.postsState.collectAsState()
+    val currentUserId = (authViewModel.authState as? AuthState.Authenticated)?.uid ?: ""
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +75,6 @@ fun Community(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 30.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = "Comunidade",
@@ -124,18 +134,26 @@ fun Community(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(30.dp))
 
-            val post: Post = Post()
-
-            Post(navController, post)
-            Spacer(modifier = Modifier.height(30.dp))
-            Post(navController, post)
-            Spacer(modifier = Modifier.height(30.dp))
-            Post(navController, post)
-            Spacer(modifier = Modifier.height(30.dp))
-            Post(navController, post)
-            Spacer(modifier = Modifier.height(30.dp))
-            Post(navController, post)
-            Spacer(modifier = Modifier.height(30.dp))
+            if (posts.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Nenhum relato encontrado", color = Color.Gray)
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    contentPadding = PaddingValues(bottom = 80.dp)
+                ) {
+                    items(posts) { post ->
+                        Post(
+                            navController = navController,
+                            post = post,
+                            currentUserId = currentUserId,
+                            onLikeClick = { postViewModel.toggleLike(post.uid, currentUserId) }
+                        )
+                    }
+                }
+            }
         }
 
         FloatingActionButton(

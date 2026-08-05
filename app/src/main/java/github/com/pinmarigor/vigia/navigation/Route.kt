@@ -41,6 +41,7 @@ sealed interface Route {
 
     @Serializable
     data class Comments(
+        val postId: String,
         val count: Int
     ): Route
 

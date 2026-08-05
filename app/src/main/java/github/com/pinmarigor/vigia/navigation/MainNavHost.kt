@@ -110,7 +110,11 @@ fun MainNavHost(
         }
 
         composable<Route.Community> {
-            Community(navController)
+            Community(
+                navController = navController,
+                postViewModel = postViewModel,
+                authViewModel = authViewModel
+            )
         }
 
         composable<Route.Warnings> {
@@ -135,7 +139,10 @@ fun MainNavHost(
 
             Comments(
                 navController = navController,
-                count = route.count
+                postId = route.postId,
+                count = route.count,
+                postViewModel = postViewModel,
+                authViewModel = authViewModel
             )
         }
 
@@ -146,7 +153,8 @@ fun MainNavHost(
         composable<Route.CreatePost> {
             CreatePostScreen(
                 navController = navController,
-                postViewModel = postViewModel
+                postViewModel = postViewModel,
+                authViewModel = authViewModel
             )
         }
     }

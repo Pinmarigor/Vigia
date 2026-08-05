@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import github.com.pinmarigor.vigia.data.firebase.FBDatabase
+import github.com.pinmarigor.vigia.data.repositories.PostRepository
 import github.com.pinmarigor.vigia.data.repositories.UserRepository
 import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.navigation.BottomNavigationBar
@@ -34,11 +35,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             val fbDatabase = FBDatabase()
             val userRepository = UserRepository(fbDatabase)
-            val postRepository = NominatimRepository(RetrofitClient.api)
+            val nominatimRepository = NominatimRepository(RetrofitClient.api)
+            val postRepository = PostRepository(fbDatabase)
 
 
             val authFactory = AuthViewModelFactory(userRepository)
-            val postFactory = PostViewModelFactory(postRepository)
+            val postFactory = PostViewModelFactory(nominatimRepository, postRepository)
 
             val authViewModel: AuthViewModel = viewModel(factory = authFactory)
             val postViewModel: PostViewModel = viewModel(factory = postFactory)

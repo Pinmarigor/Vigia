@@ -1,7 +1,6 @@
 package github.com.pinmarigor.vigia.ui.screens
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,19 +21,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import github.com.pinmarigor.vigia.data.model.Post
 import github.com.pinmarigor.vigia.data.model.PostType
 import github.com.pinmarigor.vigia.network.model.SearchLocation
 import github.com.pinmarigor.vigia.ui.theme.DarkBlue
 import github.com.pinmarigor.vigia.ui.theme.GradientMiddle
 import github.com.pinmarigor.vigia.ui.theme.LightBLue
+import github.com.pinmarigor.vigia.viewmodel.AuthState
+import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
 import github.com.pinmarigor.vigia.viewmodel.PostViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePostScreen(
     navController: NavController,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    authViewModel: AuthViewModel
 ) {
     var selectedType by remember { mutableStateOf(PostType.OUTRO) }
     var description by remember { mutableStateOf("") }
@@ -89,16 +90,18 @@ fun CreatePostScreen(
                 PublishButton(
                     enabled = description.isNotBlank() && selectedLocation != null,
                     onClick = {
-                        val newPost = Post(
-                            description = description,
-                            type = selectedType,
-                            latitude = selectedLocation?.latitude,
-                            longitude = selectedLocation?.longitude,
-                            locationName = selectedLocation?.displayName ?: ""
-                        )
-                        Log.d("POST", "Novo post criado: $newPost")
-                        // TODO: Enviar newPost para o Firebase
-                        navController.popBackStack()
+                        val authorId = (authViewModel.authState as? AuthState.Authenticated)?.uid ?: ""
+                        if (authorId.isNotBlank()) {
+                            postViewModel.publishPost(
+                                description = description,
+                                type = selectedType,
+                                latitude = selectedLocation?.latitude,
+                                longitude = selectedLocation?.longitude,
+                                locationName = selectedLocation?.displayName ?: "",
+                                authorId = authorId
+                            )
+                            navController.popBackStack()
+                        }
                     }
                 )
             }
@@ -213,7 +216,7 @@ fun LocationSection(
         } else {
             SelectedLocationCard(
                 location = selectedLocation,
-                onClear = { postViewModel.selectLocation(null) } // Reutilizando selectLocation para limpar
+                onClear = { postViewModel.selectLocation(null) }
             )
         }
     }
@@ -282,7 +285,7 @@ fun SelectedLocationCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color(0x3300BFFF)),
-        border = BorderStroke(1.dp, LightBLue)
+        border = androidx.compose.foundation.BorderStroke(1.dp, LightBLue)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,116 +39,97 @@ import github.com.pinmarigor.vigia.data.model.Post
 import github.com.pinmarigor.vigia.data.model.PostType
 import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.ui.theme.GradientStart
-import java.time.LocalDateTime
-
-class Postt (
-    val id: Int,
-    val modifier: Modifier,
-    val imageVector: ImageVector,
-    val description: String,
-    val backgroundColorIcon: Color,
-    val type: String,
-    val desc: String,
-    val location: String,
-    val time: String
-)
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun Post (navController: NavController, post: Post) {
-    // valores de post
+fun Post(
+    navController: NavController,
+    post: Post,
+    currentUserId: String = "",
+    onLikeClick: () -> Unit = {}
+) {
     val typePost = post.type
-    val description: String = post.description
-    val latitude: Double? = post.latitude
-    val longitude: Double? = post.longitude
-    val createdAt: LocalDateTime = post.createdAt
 
-    // variáveis de informações gráficas
-    var modifier: Modifier
-    var imageVector : ImageVector
-    var descIcon: String
-    var backgroundColorIcon: Color
-    var type: String
-    var desc: String
-    var location: String = post.locationName
-    var time: String
+    val modifier: Modifier
+    val imageVector: ImageVector
+    val descIcon: String
+    val backgroundColorIcon: Color
 
-    // variáveis de interface
-    var countLike by remember { mutableStateOf(0) }
-    var countComment by remember { mutableStateOf(0) }
-    var like by remember { mutableStateOf(false) }
-
-    if (typePost == PostType.ATIVIDADE_SUSPEITA) {
-        modifier = Modifier.background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp)).padding(12.dp)
-        imageVector = Icons.Default.Warning
-        descIcon = "warning"
-        backgroundColorIcon = Color(0xFFC7B300)
-        type = post.type.name
-        desc = post.description
-        location = "a descobrir"
-        time = post.createdAt.toString()
-    } else if (typePost == PostType.ROUBO) {
-        modifier = Modifier.background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp)).padding(12.dp)
-        imageVector = Icons.Default.Warning
-        descIcon = "theft"
-        backgroundColorIcon = Color(0xFFD20303)
-        type = post.type.name
-        desc = post.description
-        location = "a descobrir"
-        time = post.createdAt.toString()
-    } else if (typePost == PostType.ILUMINACAO_RUIM) {
-        modifier = Modifier.background(GradientStart, shape = RoundedCornerShape(12.dp)).padding(12.dp)
-        imageVector = Icons.Default.Lightbulb
-        descIcon = "lighting"
-        backgroundColorIcon = Color(0xF30060AB)
-        type = post.type.name
-        desc = post.description
-        location = "a descobrir"
-        time = post.createdAt.toString()
-    } else if (typePost == PostType.AREA_SEGURA) {
-        modifier = Modifier.background(Color(0xE618960B), shape = RoundedCornerShape(12.dp)).padding(12.dp)
-        imageVector = Icons.Default.Shield
-        descIcon = "safe"
-        backgroundColorIcon = Color(0xF700C70A)
-        type = post.type.name
-        desc = post.description
-        location = "a descobrir"
-        time = post.createdAt.toString()
-    } else {
-        modifier = Modifier.background(Color(0xFF606060), shape = RoundedCornerShape(12.dp)).padding(12.dp)
-        imageVector = Icons.Default.Shield
-        descIcon = "any"
-        backgroundColorIcon = Color(0xF7DEDEDE)
-        type = post.type.name
-        desc = post.description
-        location = "a descobrir"
-        time = post.createdAt.toString()
+    when (typePost) {
+        PostType.ATIVIDADE_SUSPEITA -> {
+            modifier = Modifier
+                .background(Color(0x92CBB700), shape = RoundedCornerShape(12.dp))
+                .padding(12.dp)
+            imageVector = Icons.Default.Warning
+            descIcon = "warning"
+            backgroundColorIcon = Color(0xFFC7B300)
+        }
+        PostType.ROUBO -> {
+            modifier = Modifier
+                .background(Color(0xFFB90202), shape = RoundedCornerShape(12.dp))
+                .padding(12.dp)
+            imageVector = Icons.Default.Warning
+            descIcon = "theft"
+            backgroundColorIcon = Color(0xFFD20303)
+        }
+        PostType.ILUMINACAO_RUIM -> {
+            modifier = Modifier
+                .background(GradientStart, shape = RoundedCornerShape(12.dp))
+                .padding(12.dp)
+            imageVector = Icons.Default.Lightbulb
+            descIcon = "lighting"
+            backgroundColorIcon = Color(0xF30060AB)
+        }
+        PostType.AREA_SEGURA -> {
+            modifier = Modifier
+                .background(Color(0xE618960B), shape = RoundedCornerShape(12.dp))
+                .padding(12.dp)
+            imageVector = Icons.Default.Shield
+            descIcon = "safe"
+            backgroundColorIcon = Color(0xF700C70A)
+        }
+        else -> {
+            modifier = Modifier
+                .background(Color(0xFF606060), shape = RoundedCornerShape(12.dp))
+                .padding(12.dp)
+            imageVector = Icons.Default.Shield
+            descIcon = "any"
+            backgroundColorIcon = Color(0xF7DEDEDE)
+        }
     }
 
-    Box(
-        modifier = modifier
-    ) {
-        Row() {
-            Box(modifier = Modifier
-                .background(
-                    backgroundColorIcon,
-                    shape = RoundedCornerShape(2.dp)
-                )
-                .padding(8.dp)
+    val type = post.type.name.replace("_", " ")
+    val desc = post.description
+    val location = post.locationName
+    val timeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+    val time = post.createdAt.format(timeFormatter)
+
+    // Estado local para feedback instantâneo, inicializado com os dados do post
+    var isLikedLocal by remember(post.uid) { mutableStateOf(post.likedBy.contains(currentUserId)) }
+    var likeCountLocal by remember(post.uid) { mutableIntStateOf(post.likeCount) }
+
+    Box(modifier = modifier) {
+        Row {
+            Box(
+                modifier = Modifier
+                    .background(backgroundColorIcon, shape = RoundedCornerShape(2.dp))
+                    .padding(8.dp)
             ) {
                 Icon(
                     imageVector = imageVector,
                     contentDescription = descIcon,
+                    tint = Color.White
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
-            Column() {
+            Column {
                 Text(
                     text = type,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                    fontSize = 20.sp
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = desc,
                     color = Color.White,
@@ -159,8 +141,10 @@ fun Post (navController: NavController, post: Post) {
                     Icon(
                         imageVector = Icons.Filled.LocationOn,
                         contentDescription = "location",
+                        tint = Color.LightGray,
+                        modifier = Modifier.width(14.dp)
                     )
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = location,
                         color = Color.LightGray,
@@ -168,13 +152,15 @@ fun Post (navController: NavController, post: Post) {
                         fontSize = 12.sp
                     )
                 }
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Filled.AccessTimeFilled,
                         contentDescription = "time",
+                        tint = Color.LightGray,
+                        modifier = Modifier.width(14.dp)
                     )
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = time,
                         color = Color.LightGray,
@@ -182,17 +168,13 @@ fun Post (navController: NavController, post: Post) {
                         fontSize = 12.sp
                     )
                 }
-                Spacer(modifier = Modifier.height(24.dp))
-                Row() {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
                     Button(
                         onClick = {
-                            like = !like
-
-                            if(like) {
-                                countLike++
-                            } else {
-                                countLike--
-                            }
+                            isLikedLocal = !isLikedLocal
+                            if (isLikedLocal) likeCountLocal++ else likeCountLocal--
+                            onLikeClick()
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF00326C)
@@ -201,20 +183,18 @@ fun Post (navController: NavController, post: Post) {
                         Icon(
                             imageVector = Icons.Filled.ThumbUp,
                             contentDescription = null,
-                            tint = Color(0xFF509AF8)
+                            tint = if (isLikedLocal) Color.Cyan else Color(0xFF509AF8)
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = countLike.toString(),
+                            text = likeCountLocal.toString(),
                             color = Color(0xFF509AF8)
                         )
                     }
-                    Spacer(modifier = Modifier.width(24.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
                     Button(
                         onClick = {
-                            // SharedData.selectedPost = posts
-                            println("POST SALVO: ${type.toString()}")
-                            navController.navigate(Route.Comments(countComment))
+                            navController.navigate(Route.Comments(post.uid, post.commentsCount))
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF00326C)
@@ -227,7 +207,7 @@ fun Post (navController: NavController, post: Post) {
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = countComment.toString(),
+                            text = post.commentsCount.toString(),
                             color = Color(0xFF509AF8)
                         )
                     }

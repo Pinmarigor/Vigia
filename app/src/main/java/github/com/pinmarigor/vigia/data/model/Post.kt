@@ -14,8 +14,9 @@ data class Post(
     val longitude: Double? = null,
     val locationName: String = "",
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    val commemtsCount: Int = 0,
+    val commentsCount: Int = 0,
     val shareCount: Int = 0,
     val likeCount: Int = 0,
+    val likedBy: List<String> = emptyList(),
     val type: PostType = PostType.OUTRO
 )
