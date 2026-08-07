@@ -21,11 +21,11 @@ class PostRepository(
     }
 
     override suspend fun update(item: Post) {
-        // Implementar futuramente se necessário
+        fbDatabase.updatePost(item.toFBPost())
     }
 
     override suspend fun delete(id: String) {
-        // Implementar futuramente se necessário
+        fbDatabase.deletePost(id)
     }
 
     override suspend fun getById(id: String): Post? {
@@ -33,8 +33,7 @@ class PostRepository(
     }
 
     override suspend fun getAll(): List<Post> {
-        // Para listagem reativa, usamos o getPostsFlow
-        return emptyList() 
+        return fbDatabase.getAllPosts().map { it.toPost() }
     }
 
     fun getPostsFlow(): Flow<List<Post>> {

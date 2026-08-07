@@ -28,7 +28,7 @@ class UserRepository(
     }
 
     override suspend fun getAll(): List<User> {
-        TODO("Not yet implemented")
+        return fbDatabase.getAllUsers().map { it.toUser() }
     }
 
     suspend fun signIn(email: String, password: String) {
