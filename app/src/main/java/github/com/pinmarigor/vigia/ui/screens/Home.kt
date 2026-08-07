@@ -234,10 +234,6 @@ fun Home(navController: NavController) {
                         }
 
                     }
-
-
-
-
                 }
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -267,15 +263,17 @@ fun Home(navController: NavController) {
                 }
             }
             Spacer(modifier = Modifier.height(30.dp))
-            Box(
+            Button(
+                onClick = {
+                    navController.navigate(Route.MapScreen)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        LightBLue,
-                        shape = RoundedCornerShape(15.dp)
-                    )
                     .padding(16.dp),
-                contentAlignment = Alignment.Center
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = LightBLue
+                    ),
+                shape = RoundedCornerShape(15.dp)
             ) {
                 Text(
                     text = "Iniciar trajeto monitorado",

@@ -162,4 +162,27 @@ class FBDatabase {
             Log.e("Firestore", "Erro ao atualizar likes", e)
         }
     }
+
+    suspend fun getRecentPosts(): List<FBPost> {
+        val RECENT_POST_DAY = 24
+        val RECENT_POSTS_WEEK = 7
+        val RECENT_POST_MONTH = 30
+
+        val last24Hours = System.currentTimeMillis() - (RECENT_POST_DAY * 60 * 60 * 1000)
+        val lastWeek = System.currentTimeMillis() - (RECENT_POSTS_WEEK * RECENT_POST_DAY * 60 * 60 * 1000)
+        val lastMonth = System.currentTimeMillis() - (RECENT_POST_MONTH * RECENT_POST_DAY * 60 * 60 * 1000)
+
+        val since = com.google.firebase.Timestamp(java.util.Date(lastWeek))
+
+        return try {
+            postsCollection
+                .whereGreaterThanOrEqualTo("createdAt", since)
+                .get()
+                .await()
+                .toObjects(FBPost::class.java)
+        } catch (e: Exception) {
+            Log.e("Firestore", "Erro ao buscar posts recentes", e)
+            emptyList()
+        }
+    }
 }

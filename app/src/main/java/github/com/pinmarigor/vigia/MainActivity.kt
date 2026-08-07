@@ -12,8 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.location.LocationServices
 import github.com.pinmarigor.vigia.data.firebase.FBDatabase
+import github.com.pinmarigor.vigia.data.repositories.LocationRepository
 import github.com.pinmarigor.vigia.data.repositories.PostRepository
+import github.com.pinmarigor.vigia.data.repositories.RoutingRepository
 import github.com.pinmarigor.vigia.data.repositories.UserRepository
 import github.com.pinmarigor.vigia.ui.components.Sos
 import github.com.pinmarigor.vigia.navigation.BottomNavigationBar
@@ -22,10 +25,15 @@ import github.com.pinmarigor.vigia.navigation.Route
 import github.com.pinmarigor.vigia.network.repository.NominatimRepository
 import github.com.pinmarigor.vigia.network.retrofit.RetrofitClient
 import github.com.pinmarigor.vigia.ui.screens.SosScreen
+import github.com.pinmarigor.vigia.utils.RouteSafetyCalculator
 import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
+import github.com.pinmarigor.vigia.viewmodel.LocationProviderViewModel
 import github.com.pinmarigor.vigia.viewmodel.PostViewModel
+import github.com.pinmarigor.vigia.viewmodel.RouteProviderViewModel
 import github.com.pinmarigor.vigia.viewmodel.factory.AuthViewModelFactory
+import github.com.pinmarigor.vigia.viewmodel.factory.LocationProviderViewModelFactory
 import github.com.pinmarigor.vigia.viewmodel.factory.PostViewModelFactory
+import github.com.pinmarigor.vigia.viewmodel.factory.RouteProviderViewModelFactory
 import retrofit2.Retrofit
 
 class MainActivity : ComponentActivity() {
@@ -37,13 +45,25 @@ class MainActivity : ComponentActivity() {
             val userRepository = UserRepository(fbDatabase)
             val nominatimRepository = NominatimRepository(RetrofitClient.api)
             val postRepository = PostRepository(fbDatabase)
+            val routingRepository = RoutingRepository(
+                RetrofitClient.routingApi,
+                postRepository,
+                RouteSafetyCalculator()
+            )
+
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+            val locationRepository = LocationRepository(fusedLocationClient)
 
 
             val authFactory = AuthViewModelFactory(userRepository)
             val postFactory = PostViewModelFactory(nominatimRepository, postRepository)
+            val routeProviderFactory = RouteProviderViewModelFactory(routingRepository)
+            val locationFactory = LocationProviderViewModelFactory(locationRepository)
 
             val authViewModel: AuthViewModel = viewModel(factory = authFactory)
             val postViewModel: PostViewModel = viewModel(factory = postFactory)
+            val routeProviderViewModel: RouteProviderViewModel = viewModel(factory = routeProviderFactory)
+            val locationViewModel: LocationProviderViewModel = viewModel(factory = locationFactory)
 
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -77,7 +97,9 @@ class MainActivity : ComponentActivity() {
                     MainNavHost(
                         navController = navController,
                         authViewModel = authViewModel,
-                        postViewModel = postViewModel
+                        postViewModel = postViewModel,
+                        routeViewModel = routeProviderViewModel,
+                        locationViewModel = locationViewModel
                     )
                 }
             }

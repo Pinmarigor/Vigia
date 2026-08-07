@@ -26,13 +26,17 @@ import github.com.pinmarigor.vigia.ui.screens.login.RegisterScreen
 import github.com.pinmarigor.vigia.ui.screens.CreatePostScreen
 import github.com.pinmarigor.vigia.viewmodel.AuthState
 import github.com.pinmarigor.vigia.viewmodel.AuthViewModel
+import github.com.pinmarigor.vigia.viewmodel.LocationProviderViewModel
 import github.com.pinmarigor.vigia.viewmodel.PostViewModel
+import github.com.pinmarigor.vigia.viewmodel.RouteProviderViewModel
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    routeViewModel: RouteProviderViewModel,
+    locationViewModel: LocationProviderViewModel
 ) {
     val authState = authViewModel.authState
 
@@ -106,7 +110,12 @@ fun MainNavHost(
         }
 
         composable <Route.MapScreen>{
-            MapScreen(navController)
+            MapScreen(
+                navController = navController,
+                routeProviderViewModel = routeViewModel,
+                postViewModel = postViewModel,
+                locationViewModel = locationViewModel
+            )
         }
 
         composable<Route.Community> {

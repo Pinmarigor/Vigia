@@ -38,7 +38,7 @@ class NominatimRepository(
             }.toMutableList()
 
         } catch (e: Exception) {
-            Log.e("NominatimRepository", "Erro no reverse geocoding: ${e.message}", e)
+            Log.e("NominatimRepository", "Erro na busca de localizações: ${e.message}", e)
             return mutableListOf<SearchLocation>()
         }
     }

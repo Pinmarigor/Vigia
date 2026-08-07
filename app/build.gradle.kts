@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation("com.google.maps.android:maps-compose:6.5.2")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.maps.android:android-maps-utils:3.9.0")
 
     implementation("androidx.navigation:navigation-compose:2.9.8")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")

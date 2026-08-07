@@ -2,6 +2,7 @@ package github.com.pinmarigor.vigia.network.retrofit
 
 import java.util.concurrent.TimeUnit
 import github.com.pinmarigor.vigia.network.api.NominatimApi
+import github.com.pinmarigor.vigia.network.api.RoutingApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -38,5 +39,14 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NominatimApi::class.java)
+    }
+
+    val routingApi: RoutingApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://router.project-osrm.org/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RoutingApi::class.java)
     }
 }

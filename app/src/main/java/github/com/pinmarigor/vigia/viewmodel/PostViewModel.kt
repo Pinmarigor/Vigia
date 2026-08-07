@@ -35,6 +35,7 @@ class PostViewModel(
     val selectedLocationState = _selectedLocation.asStateFlow()
 
     private val likeJobs = mutableMapOf<String, Job>()
+    private var searchJob: Job? = null
 
     val postsState: StateFlow<List<Post>> = postRepository.getPostsFlow()
         .stateIn(
@@ -64,12 +65,22 @@ class PostViewModel(
     }
 
     fun searchLocation(query: String) {
-        viewModelScope.launch {
+        val text = query.trim()
+        
+        searchJob?.cancel()
+        
+        if (text.length < 3) {
+            _searchResults.value = emptyList()
+            return
+        }
+
+        searchJob = viewModelScope.launch {
+            delay(500)
             try {
-                val locations = nominatimRepository.searchLocation(query)
+                val locations = nominatimRepository.searchLocation(text)
                 _searchResults.value = locations
             } catch (e: Exception) {
-                Log.e("SEARCH", "Erro ao buscar localidade: $query", e)
+                Log.e("SEARCH", "Erro ao buscar localidade: $text", e)
                 _searchResults.value = emptyList()
             }
         }
